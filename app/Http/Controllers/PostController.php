@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\PostContent;
 
 class PostController extends Controller
 {
@@ -26,7 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $count = 1;
+        $count = 3;
         return view('blog.posts.create', compact('count'));
     }
 
@@ -38,7 +39,30 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        // Добавление данных в PostContent в разные поля бд, не смотря как много данных придет из вне
+        $data = $request->input();
+        $data2 = $data;
+        $num = count($data['body']);
+        for($i = 0; $i < $num; $i++) {
+            //text add
+            if($data['body'][$i]) {
+                $data2['body'] = $data['body'][$i];
+                $item = (new PostContent())->create($data2); 
+                $data2 = $data;
+            }
+            //photo add
+            else{
+                //
+            }
+            
+        }
+        if( $item ) {
+            return back();
+        }
+        else {
+            return back()->withErrors(['msg'=>'Ошибка заполнения поста'])
+                         ->withInput();
+        }
     }
 
     /**

@@ -7,8 +7,14 @@
             @auth
             <form method="POST" action="{{ route('post.store') }}">
             @csrf
+                {{ $count = 0 }}
                 @for($i = 0; $i < $count; $i++)
-                    <input placeholder="text" type="text" name="body">
+                <input name=" body[{{ $i }}]"
+                        id="{{ $i }}"
+                        type="text"
+                        class="form-control"
+                        minlength="3"
+                        required>
                 @endfor
                 <button type="submit">отправить</button>
             </form>
