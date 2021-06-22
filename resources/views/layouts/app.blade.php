@@ -42,6 +42,13 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('post.index') }}">{{ __('Lore') }}</a>
                         </li>
+                        @auth
+                        @if(Auth::user()->is_admin == 1)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('post.create') }}">{{ __('Admin') }}</a>
+                        </li>
+                        @endif
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->

@@ -29,7 +29,6 @@ class PostFactory extends Factory
             'title' => $this->faker->slug(2),
             'user_id' => $userId,
             'view_count' => $this->faker->randomNumber(3),
-            'body' => $this->faker->text(100),
             'tags' => $this->faker->sentence(1),
             'comment_count' =>$this->faker->randomNumber(2),
             'post_type_id' => $postTypeId,

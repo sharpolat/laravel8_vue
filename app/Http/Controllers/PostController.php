@@ -15,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(4);
+        $posts = Post::latest()->paginate(4);
         return view('blog.posts.index', compact('posts'));
     }
 
@@ -26,7 +26,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $count = 1;
+        return view('blog.posts.create', compact('count'));
     }
 
     /**
@@ -37,7 +38,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
