@@ -21,7 +21,9 @@
                         <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
                         <!-- Post content-->
                         <section class="mb-5">
-                            <p class="fs-5 mb-4">{{ $postId->body }}</p>
+                        @for($i = 0; $i < count($postId->PostContent); $i++)
+                            <p class="fs-5 mb-1">{{ $postId->PostContent[$i]['body'] }}</p>
+                        @endfor
                         </section>
                     </article>
                     <hr class="bg-dark">

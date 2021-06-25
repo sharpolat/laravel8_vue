@@ -16,7 +16,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->paginate(4);
+        
+        $posts = Post::with('PostContent')->latest()->paginate(4);
         return view('blog.posts.index', compact('posts'));
     }
 
@@ -27,8 +28,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        $count = 3;
-        return view('blog.posts.create', compact('count'));
+        $post_id = Post::latest()->first();
+        // dd($post_id);
+        $count = 2;
+        return view('blog.posts.create', compact('count', 'post_id'));
     }
 
     /**
@@ -39,24 +42,29 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        // Для начала создание самого поста для последующего добавление внего данных(post_contents)
+        $dataForPost = $request->only('title', 'tags', 'view_count', 'post_type_id', 'user_id', 'comment_count');
+        $itemForPost = (new Post())->create($dataForPost);
+        
+
         // Добавление данных в PostContent в разные поля бд, не смотря как много данных придет из вне
-        $data = $request->input();
+        $data = $request->only('body', 'photo', 'post_id');
         $data2 = $data;
         $num = count($data['body']);
         for($i = 0; $i < $num; $i++) {
-            //text add
+            //add text
             if($data['body'][$i]) {
                 $data2['body'] = $data['body'][$i];
-                $item = (new PostContent())->create($data2); 
+                $data2['post_id'] = $data['post_id'] + 1;
+                $itemForPostContent = (new PostContent())->create($data2); 
                 $data2 = $data;
             }
-            //photo add
+            //add photo
             else{
                 //
             }
-            
         }
-        if( $item ) {
+        if( $itemForPostContent || $itemForPost ) {
             return back();
         }
         else {
@@ -73,7 +81,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $postId = Post::find($id);
+        $postId = Post::with('PostContent')->find($id);
         $comments = Comment::where("post_id", "=" ,$id)->with('user')->latest()->get();
         return view('blog.posts.show', compact('postId', 'comments'));
     }

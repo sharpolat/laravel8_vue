@@ -18,6 +18,8 @@ class CreatePostContentsTable extends Migration
             $table->string('photo')->nullable();
             $table->text('body')->nullable();
             $table->timestamps();
+
+            $table->foreignId('post_id')->constrained()->nullable();
         });
     }
 
