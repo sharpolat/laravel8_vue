@@ -64,20 +64,30 @@
                                         {{ $comment->body }}
                                     </div>
                                 </div>
-                                @auth
-                                    @if(Auth::user()->id == $comment->user->id)
-                                        <form method="POST" action="{{ route('comment.destroy', $comment->id) }}">
-                                        @method('delete')
-                                        @csrf
-                                        <div>
-                                            <button type="submit">
-                                                удалить сообщение
-                                            </button>
-                                        </div>
-                                        </form>
-                                    @endif
-                                @endauth
-
+                                
+                                <div class="row">
+                                    <div class="col-3">
+                                        <button type="submit" class="btn btn-primary btn-sm">
+                                            ответить
+                                        </button>
+                                    </div>
+                                    <div class="col-3">
+                                    @auth
+                                        @if(Auth::user()->id == $comment->user->id)
+                                            <form method="POST" action="{{ route('comment.destroy', $comment->id) }}">
+                                            @method('delete')
+                                            @csrf
+                                            <div>
+                                                <button type="submit" class="btn btn-primary btn-sm">
+                                                    удалить
+                                                </button>
+                                            </div>
+                                            </form>
+                                        @endif
+                                    @endauth
+                                    </div>
+                                    
+                                </div>
                                 @endforeach
                             </div>
                         </div>
