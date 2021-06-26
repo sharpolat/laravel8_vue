@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Character;
 
 class CharacterController extends Controller
 {
@@ -13,7 +14,9 @@ class CharacterController extends Controller
      */
     public function index()
     {
-        return view('character.index');
+        $mainCharacters = Character::inRandomOrder()->paginate(3);
+        $npcCharacters = Character::inRandomOrder()->paginate(3);
+        return view('character.index', compact('mainCharacters', 'npcCharacters'));
     }
 
     /**
@@ -81,4 +84,6 @@ class CharacterController extends Controller
     {
         //
     }
+
+    
 }

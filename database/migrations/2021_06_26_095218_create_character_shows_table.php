@@ -18,6 +18,8 @@ class CreateCharacterShowsTable extends Migration
             $table->string('title', 250);
             $table->text('body')->nullable();
             $table->string('photo')->nullable();
+            $table->timestamps();
+            
 
             $table->foreignId('character_id')->constrained()->nullable();
         });
@@ -33,3 +35,5 @@ class CreateCharacterShowsTable extends Migration
         Schema::dropIfExists('character_shows');
     }
 }
+
+

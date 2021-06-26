@@ -7,6 +7,8 @@ use App\Models\Post;
 use App\Models\Comment;
 use App\Models\PostContent;
 
+
+
 class PostController extends Controller
 {
     /**
@@ -82,7 +84,7 @@ class PostController extends Controller
     public function show($id)
     {
         $postId = Post::with('PostContent')->find($id);
-        $comments = Comment::where("post_id", "=" ,$id)->with('user')->latest()->get();
+        $comments = Comment::where("post_id", "=", $id)->with('user')->latest()->get();
         return view('blog.posts.show', compact('postId', 'comments'));
     }
 

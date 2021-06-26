@@ -22,7 +22,9 @@ class CharacterFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'body' => $this->faker->text(100),
+            'name' => $this->faker->name(9),
+            'photo'=> 'https://source.unsplash.com/random',
         ];
     }
 }

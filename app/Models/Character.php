@@ -10,6 +10,8 @@ class Character extends Model
     use HasFactory;
 
     public function characterShow() {
-        return $this->hasMany(Character::class);
+        return $this->hasMany(CharacterShow::class);
     }
 }
+
+
