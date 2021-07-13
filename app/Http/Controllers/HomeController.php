@@ -24,8 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $postTypeId = Post::orderByRaw("RAND()")->first();
-        dd($postTypeId->id);
         return view('home');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Character;
+use App\Models\CharacterShow;
 
 class CharacterController extends Controller
 {
@@ -26,7 +27,7 @@ class CharacterController extends Controller
      */
     public function create()
     {
-        //
+        return view('character.create');
     }
 
     /**
@@ -48,7 +49,9 @@ class CharacterController extends Controller
      */
     public function show($id)
     {
-        //
+        $characterData = Character::with('characterShow')->find($id);
+        $chracterRandNames = Character::inRandomOrder()->limit(5)->get();
+        return view('character.show', compact('characterData', 'chracterRandNames'));
     }
 
     /**

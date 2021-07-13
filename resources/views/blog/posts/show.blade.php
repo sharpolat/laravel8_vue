@@ -18,11 +18,17 @@
                             <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{ $postId->tags }}</a>
                         </header>
                         <!-- Preview image figure-->
-                        <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
+                        
                         <!-- Post content-->
                         <section class="mb-5">
                         @for($i = 0; $i < count($postId->PostContent); $i++)
-                            <p class="fs-5 mb-1">{{ $postId->PostContent[$i]['body'] }}</p>
+                            @if(isset($postId->PostContent[$i]['body']))
+                                <p class="fs-5 mb-1">{{ $postId->PostContent[$i]['body'] }} </p> <br>
+                            @elseif(isset($postId->PostContent[$i]['photo']))
+                                <div class="p-0 m-0"><img src="/image/{{ $postId->PostContent[$i]['photo'] }}" width="680px"> </div> <br>
+                            @else
+                            @continue
+                            @endif
                         @endfor
                         </section>
                     </article>
@@ -58,20 +64,16 @@
                                 <!-- Comment with nested comments-->
                                 <div class="d-flex mt-4">
                                     <!-- Parent comment-->
-                                    
                                     <div class="ms-3">
                                         <div class="fw-bold">{{ $comment->user_display_name  }}</div>
                                         {{ $comment->body }}
                                     </div>
                                 </div>
                                 
-                                <div class="row">
-                                    <div class="col-3">
+                                <div class="d-flex flex-sm-row">
                                         <button type="submit" class="btn btn-primary btn-sm">
                                             ответить
                                         </button>
-                                    </div>
-                                    <div class="col-3">
                                     @auth
                                         @if(Auth::user()->id == $comment->user->id)
                                             <form method="POST" action="{{ route('comment.destroy', $comment->id) }}">
@@ -85,10 +87,9 @@
                                             </form>
                                         @endif
                                     @endauth
-                                    </div>
-                                    
                                 </div>
-                                @endforeach
+                                <hr>
+                            @endforeach
                             </div>
                         </div>
                     </section>

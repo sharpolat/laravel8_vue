@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Comment;
 use App\Models\PostContent;
+use App\Http\Requests\StorePostRequest;
 
 
 
 class PostController extends Controller
 {
+    static $count;
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +20,6 @@ class PostController extends Controller
      */
     public function index()
     {
-        
         $posts = Post::with('PostContent')->latest()->paginate(4);
         return view('blog.posts.index', compact('posts'));
     }
@@ -30,10 +31,10 @@ class PostController extends Controller
      */
     public function create()
     {
+        $count = [''];
+        $i = 0;
         $post_id = Post::latest()->first();
-        // dd($post_id);
-        $count = 2;
-        return view('blog.posts.create', compact('count', 'post_id'));
+        return view('blog.posts.create', compact('post_id', 'count', 'i'));
     }
 
     /**
@@ -42,37 +43,139 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        // Для начала создание самого поста для последующего добавление внего данных(post_contents)
+    public function store(StorePostRequest $request)
+    {   
+        // Для начала создание самого поста для последующего добавление данных(post_contents)
         $dataForPost = $request->only('title', 'tags', 'view_count', 'post_type_id', 'user_id', 'comment_count');
         $itemForPost = (new Post())->create($dataForPost);
+        // Добавление данных в Post->PostContent в разные поля бд, не смотря как много данных придет из вне
+        $dataForText = $request->only('id','body', 'post_id');
+        $dataForPhoto = $request->only('id', 'photo', 'post_id');
+        // Либо создание поста image+text либо по отдельности
+        if(isset($dataForText['body']) && isset($dataForPhoto['photo'])){
+            $arrayMergeForData = $dataForText['body'] + $dataForPhoto['photo'];
+            ksort($arrayMergeForData);
+        }
+        elseif(isset($dataForText['body'])) {
+            $onlyBodyData = $dataForText['body'];
+        }
+        else{
+            $onlyImageData = $dataForPhoto['photo'];
+        }
+        if(isset($onlyBodyData)) {
+            foreach($onlyBodyData as $item) {
+                $dataForText2['body'] = $item;
+                $dataForText2['post_id'] = $dataForText['post_id'] + 1;
+                $itemForText = (new PostContent())->create($dataForText2);
+                echo $item . ' Text' . '<br>'; 
+            }
+        }
+        if(isset($onlyImageData)) {
+            foreach($onlyImageData as $item) {
+                if(is_readable($item)) {
+                    $images = $request->file('photo');
+                    $destinationPath = 'image/';
+                    foreach($images as $image){
+                        if($item->getClientOriginalName() == $image->getClientOriginalName()){
+                            $postImage = date('YmdHis').gettimeofday()["usec"] . "." . $image->getClientOriginalExtension();
+                            $image->move($destinationPath, $postImage);
+                            $input['photo'] = "$postImage";
+                            echo 'photo' . $postImage . '<br>';
+                        }
+                    }
+                    if($input['photo']) {
+                        $input['post_id'] = $dataForPhoto['post_id'] + 1;
+                        $itemForImage = (new PostContent())->create($input);
+                    }
+                }
+            }
+        }
         
+        $dataForText2 = $dataForText;
+        $dataForPhoto2 = $dataForPhoto;
+        if(isset($arrayMergeForData)){
+            foreach($arrayMergeForData as $item) {
+                if(is_readable($item)) {
+                    $images = $request->file('photo');
+                    $destinationPath = 'image/';
+                    foreach($images as $image){
+                        if($item->getClientOriginalName() == $image->getClientOriginalName()){
+                            $postImage = date('YmdHis').gettimeofday()["usec"] . "." . $image->getClientOriginalExtension();
+                            $image->move($destinationPath, $postImage);
+                            $input['photo'] = "$postImage";
+                            echo 'photo' . $postImage . '<br>';
+                        }
+                    }
+                    if($input['photo']) {
+                        $input['post_id'] = $dataForPhoto['post_id'] + 1;
+                        $itemForImage = (new PostContent())->create($input);
+                    }
+                }
+                else{
+                    $dataForText2['body'] = $item;
+                    $dataForText2['post_id'] = $dataForText['post_id'] + 1;
+                    $itemForText = (new PostContent())->create($dataForText2);
+                    echo $item . ' Text' . '<br>';
+                }
+            }
+        }
+        // if(isset($request)) {
+        //     $numForText = count($dataForText['body']);
+        //     for($i = 0; $i < $numForText; $i++) {
+        //         //add text
+        //         if($dataForText['body'][$i]) {
+        //             $dataForText2['body'] = $dataForText['body'][$i];
+        //             $dataForText2['post_id'] = $dataForText['post_id'] + 1;
+        //             $itemForPostContent = (new PostContent())->create($dataForText2);
+        //             $dataForText2 = $dataForText;
+        //         }
+        //     }
+        // }
 
-        // Добавление данных в PostContent в разные поля бд, не смотря как много данных придет из вне
-        $data = $request->only('body', 'photo', 'post_id');
-        $data2 = $data;
-        $num = count($data['body']);
-        for($i = 0; $i < $num; $i++) {
-            //add text
-            if($data['body'][$i]) {
-                $data2['body'] = $data['body'][$i];
-                $data2['post_id'] = $data['post_id'] + 1;
-                $itemForPostContent = (new PostContent())->create($data2); 
-                $data2 = $data;
+        // if(isset($dataForPhoto['photo'])) {
+        //     if($images = $request->file('photo')) {
+        //         $destinationPath = 'image/';
+        //         foreach($images as $image){
+        //             $postImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+        //             $image->move($destinationPath, $postImage);
+        //             $input['photo'] = "$postImage";
+        //         }
+        //     }
+        //     if($input['photo']) {
+        //         $input['post_id'] = $dataForPhoto['post_id'] + 1;
+        //         $itemForPostContent = (new PostContent())->create($input);
+        //     }
+        // }
+
+        // dd($itemForPostContent, $itemForPost);
+        if(isset($arrayMergeForData)) {
+            if( $itemForImage && $itemForText) {
+                return back();
             }
-            //add photo
-            else{
-                //
+            else {
+                return back()->withErrors(['msg'=>'Ошибка заполнения поста'])
+                             ->withInput();
             }
         }
-        if( $itemForPostContent || $itemForPost ) {
-            return back();
+        if(isset($onlyBodyData)) {
+            if($itemForText) {
+                return back();
+            }
+            else {
+                return back()->withErrors(['msg'=>'Ошибка заполнения поста'])
+                             ->withInput();
+            }
         }
-        else {
-            return back()->withErrors(['msg'=>'Ошибка заполнения поста'])
-                         ->withInput();
+        if(isset($onlyImageData)) {
+            if($itemForImage) {
+                return back();
+            }
+            else {
+                return back()->withErrors(['msg'=>'Ошибка заполнения поста'])
+                             ->withInput();
+            }
         }
+        
     }
 
     /**
@@ -119,6 +222,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete = Post::find($id)->delete();
+        return back();
     }
 }

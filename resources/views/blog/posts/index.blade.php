@@ -22,21 +22,33 @@
                         
                         
                         @for($i = 0; $i < count($post->PostContent); $i++)
-                            <p class="fs-5 mb-1">{{ $post->PostContent[$i]['body'] }} </p> <br>
+                            @if(isset($post->PostContent[$i]['body']))
+                                <p class="fs-5 mb-1">{{ $post->PostContent[$i]['body'] }} </p> <br>
+                            @elseif(isset($post->PostContent[$i]['photo']))
+                                <div class="p-0 m-0"><img src="/image/{{ $post->PostContent[$i]['photo'] }}" width="680px"> </div> <br>
+                            @else
+                            @continue
+                            @endif
                         @endfor
-                            
-                        </section>
-                        
-  
-                        
+                       
                     </article>
                     
                     <div class="mb-4">
                         <a href="{{ route('post.show', $post->id) }}">
                             <button  href="" type="button" class="btn btn-primary btn-sm">{{$post->id}}</button>
                         </a>
+                        @auth
+                            @if(Auth::user()->is_admin == 1)
+                                <form method="POST" action="{{ route('post.destroy', $post->id) }}">
+                                @method('delete')
+                                @csrf
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        Удалить этот пост
+                                    </button>
+                                </form>
+                                @endif
+                        @endauth
                     </div>
-                    
                     </div>
                     
                     @endforeach
@@ -74,5 +86,4 @@
                 </div>
             </div>
         </div>
-
 @endsection
