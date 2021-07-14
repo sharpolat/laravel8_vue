@@ -8,10 +8,10 @@
                 <div class="col-lg-8">
                     @foreach($posts as $post)
                     <!-- Post content-->
-                    <div class="card px-4 pt-4 mb-4">
+                    <div class="card pt-4 mb-2">
                     <article>
                         <!-- Post header-->
-                        <header class="mb-4">
+                        <header class=" px-4 mb-4">
                             <!-- Post title-->
                             <h1 class="fw-bolder mb-1">{{$post->title}}</h1>
                             <!-- Post meta content-->
@@ -23,9 +23,9 @@
                         
                         @for($i = 0; $i < count($post->PostContent); $i++)
                             @if(isset($post->PostContent[$i]['body']))
-                                <p class="fs-5 mb-1">{{ $post->PostContent[$i]['body'] }} </p> <br>
+                                <p class="fs-5 px-4 mb-1">{{ $post->PostContent[$i]['body'] }} </p> <br>
                             @elseif(isset($post->PostContent[$i]['photo']))
-                                <div class="p-0 m-0"><img src="/image/{{ $post->PostContent[$i]['photo'] }}" width="680px"> </div> <br>
+                                <div class="p-0 m-0"><img src="/image/{{ $post->PostContent[$i]['photo'] }}" width="800px" class="img-fluid"> </div> <br>
                             @else
                             @continue
                             @endif
@@ -33,7 +33,7 @@
                        
                     </article>
                     
-                    <div class="mb-4">
+                    <div class="mb-4 px-4">
                         <a href="{{ route('post.show', $post->id) }}">
                             <button  href="" type="button" class="btn btn-primary btn-sm">{{$post->id}}</button>
                         </a>

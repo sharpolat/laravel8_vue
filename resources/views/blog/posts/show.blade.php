@@ -25,7 +25,7 @@
                             @if(isset($postId->PostContent[$i]['body']))
                                 <p class="fs-5 mb-1">{{ $postId->PostContent[$i]['body'] }} </p> <br>
                             @elseif(isset($postId->PostContent[$i]['photo']))
-                                <div class="p-0 m-0"><img src="/image/{{ $postId->PostContent[$i]['photo'] }}" width="680px"> </div> <br>
+                                <div class="p-0 m-0"><img src="/image/{{ $postId->PostContent[$i]['photo'] }}" width="680px" class="img-fluid"> </div> <br>
                             @else
                             @continue
                             @endif

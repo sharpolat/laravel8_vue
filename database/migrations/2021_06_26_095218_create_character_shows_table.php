@@ -21,7 +21,7 @@ class CreateCharacterShowsTable extends Migration
             $table->timestamps();
             
 
-            $table->foreignId('character_id')->constrained()->nullable();
+            $table->foreignId('character_id')->constrained()->nullable()->onDelete('cascade');
         });
     }
 

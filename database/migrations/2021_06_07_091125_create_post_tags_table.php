@@ -17,7 +17,7 @@ class CreatePostTagsTable extends Migration
             $table->id();
             $table->timestamps();
 
-            $table->foreignId('post_id')->constrained();
+            $table->foreignId('post_id')->constrained()->onDelete('cascade');
             $table->foreignId('tag_id')->constrained();
         });
     }

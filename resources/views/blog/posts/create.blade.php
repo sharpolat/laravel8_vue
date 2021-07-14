@@ -63,6 +63,7 @@
                     @if($count[$k] == 'text')
                     <div>Text
                         <input name="body[{{$k}}]"
+                                
                                 type="text"
                                 class="form-control"
                                 minlength="3"

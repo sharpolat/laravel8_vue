@@ -19,7 +19,7 @@ class CreateCommentsTable extends Migration
             $table->string('user_display_name')->nullable();
             $table->timestamps();
 
-            $table->foreignId('post_id')->constrained()->nullable();
+            $table->foreignId('post_id')->constrained()->nullable()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->nullable();
         });
     }

@@ -8,6 +8,7 @@ use App\Models\Post;
 class CountIncrementController extends Controller
 {
     public function countIncrement(Request $request) {
+        dd($request);
         $count = $request->input('count');
         $i =  $request->input('i');
         $resultForText = $request->input('textNameForText');
@@ -18,6 +19,7 @@ class CountIncrementController extends Controller
             array_push($count, $resultForPhoto);
         }
         $post_id = Post::latest()->first();
+        $request->flashOnly(['username', 'email']);
         return view('blog.posts.create', compact('post_id','count'));
     }
 }

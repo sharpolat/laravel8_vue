@@ -90,7 +90,6 @@ class PostController extends Controller
                 }
             }
         }
-        
         $dataForText2 = $dataForText;
         $dataForPhoto2 = $dataForPhoto;
         if(isset($arrayMergeForData)){
