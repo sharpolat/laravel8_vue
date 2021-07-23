@@ -9,7 +9,7 @@
             <h4>(я разделил создание поста и персонажа так как возможно буду использовать эту же страницу и для создания поста сторонними людьми)</h4>
             <form  action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-                <div>Заголовок
+                <div class="mb-2">
                     <input name="title"
                             id="title"
                             type="text"
@@ -18,7 +18,7 @@
                             placeholder="Заголовок"
                             required>
                 </div>
-                <div>Теги
+                <div class="mb-2">
                     <input name="tags"
                             id="tags"
                             type="text"
@@ -59,23 +59,29 @@
                             value="{{ rand(0, 40) }}"
                             required>
                 </div>
+                
                 @for($k = 0; $k < count($count); $k++)
                     @if($count[$k] == 'text')
-                    <div>Text
+                    <div class="mb-2">
                         <input name="body[{{$k}}]"
-                                
-                                type="text"
+                                placeholder="Введите Текст"
+                                type="textarea"
                                 class="form-control"
                                 minlength="3"
                                 required>
                     </div>
+                    
                     @elseif(($count[$k] == 'photo'))
-                    <div>Photo
-                        <input name="photo[{{$k}}]"
+                    <div class="card mb-2 ">
+                        <div class="card-body  p-2 m-2.">
+                            <input name="photo[{{$k}}]"
+                                
+                                placeholder="Выберите файл"
                                 type="file"
-                                class="form-control"
+                                class="form-control-file"
                                 minlength="3"
                                 required>
+                        </div>
                     </div>
                     @endif
                 @endfor
@@ -85,7 +91,8 @@
                         type="hidden"
                         class="form-control"
                         value="{{ $post_id->id }}">
-                <button type="submit">Опубликовать</button>
+                <button type="submit" name="submitAction" value="Submit">Опубликовать</button>
+                <button type="submit" name="previewAction" value="Preview">Предпросмотр</button>
             </form>
             
                 @if($errors->any())

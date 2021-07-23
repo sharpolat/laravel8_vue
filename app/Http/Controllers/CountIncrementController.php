@@ -8,7 +8,7 @@ use App\Models\Post;
 class CountIncrementController extends Controller
 {
     public function countIncrement(Request $request) {
-        dd($request);
+            
         $count = $request->input('count');
         $i =  $request->input('i');
         $resultForText = $request->input('textNameForText');

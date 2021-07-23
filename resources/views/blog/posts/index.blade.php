@@ -6,6 +6,9 @@
             <div class="row" >
                 
                 <div class="col-lg-8">
+                    @if(Route::is('tag.show'))
+                        <h2 class="fw-bolder mb-1 text-dark mb-4">Все статьи где присутсвтует тег - {{ $tagName }}</h2>
+                    @endif
                     @foreach($posts as $post)
                     <!-- Post content-->
                     <div class="card pt-4 mb-2">
@@ -13,11 +16,13 @@
                         <!-- Post header-->
                         <header class=" px-4 mb-4">
                             <!-- Post title-->
-                            <h1 class="fw-bolder mb-1">{{$post->title}}</h1>
+                            <a href="{{ route('post.show', $post->id) }}">
+                                <h1 class="fw-bolder mb-1 text-dark">{{$post->title}}</h1>
+                            </a>
                             <!-- Post meta content-->
                             <div class="text-muted fst-italic mb-2">Posted on {{ $post->created_at }}</div>
                             <!-- Post categories-->
-                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{ $post->tags }}</a>
+                            <a class="badge bg-secondary text-decoration-none link-light" href="{{route('tag.show', $post->tags) }}">{{ $post->tags }}</a>
                         </header>
                         
                         

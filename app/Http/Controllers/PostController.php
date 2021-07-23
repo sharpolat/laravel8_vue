@@ -45,9 +45,15 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {   
+        if(isset($request->previewAction)){
+            return redirect()
+                            ->route('preview')
+                            ->withInput($request->input());
+        }
         // Для начала создание самого поста для последующего добавление данных(post_contents)
         $dataForPost = $request->only('title', 'tags', 'view_count', 'post_type_id', 'user_id', 'comment_count');
         $itemForPost = (new Post())->create($dataForPost);
+        $postId = Post::latest()->first();
         // Добавление данных в Post->PostContent в разные поля бд, не смотря как много данных придет из вне
         $dataForText = $request->only('id','body', 'post_id');
         $dataForPhoto = $request->only('id', 'photo', 'post_id');
@@ -65,7 +71,7 @@ class PostController extends Controller
         if(isset($onlyBodyData)) {
             foreach($onlyBodyData as $item) {
                 $dataForText2['body'] = $item;
-                $dataForText2['post_id'] = $dataForText['post_id'] + 1;
+                $dataForText2['post_id'] = $postId['id'];
                 $itemForText = (new PostContent())->create($dataForText2);
                 echo $item . ' Text' . '<br>'; 
             }
@@ -84,7 +90,7 @@ class PostController extends Controller
                         }
                     }
                     if($input['photo']) {
-                        $input['post_id'] = $dataForPhoto['post_id'] + 1;
+                        $input['post_id'] = $postId['id'];
                         $itemForImage = (new PostContent())->create($input);
                     }
                 }
@@ -106,13 +112,13 @@ class PostController extends Controller
                         }
                     }
                     if($input['photo']) {
-                        $input['post_id'] = $dataForPhoto['post_id'] + 1;
+                        $input['post_id'] = $postId['id'];
                         $itemForImage = (new PostContent())->create($input);
                     }
                 }
                 else{
                     $dataForText2['body'] = $item;
-                    $dataForText2['post_id'] = $dataForText['post_id'] + 1;
+                    $dataForText2['post_id'] = $postId['id'];
                     $itemForText = (new PostContent())->create($dataForText2);
                     echo $item . ' Text' . '<br>';
                 }
