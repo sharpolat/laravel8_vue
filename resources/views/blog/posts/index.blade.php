@@ -24,21 +24,17 @@
                             <!-- Post categories-->
                             <a class="badge bg-secondary text-decoration-none link-light" href="{{route('tag.show', $post->tags) }}">{{ $post->tags }}</a>
                         </header>
-                        
-                        
                         @for($i = 0; $i < count($post->PostContent); $i++)
                             @if(isset($post->PostContent[$i]['body']))
                                 <p class="fs-5 px-4 mb-1">{{ $post->PostContent[$i]['body'] }} </p> <br>
                             @elseif(isset($post->PostContent[$i]['photo']))
-                                <div class="p-0 m-0"><img src="/image/{{ $post->PostContent[$i]['photo'] }}" width="800px" class="img-fluid"> </div> <br>
+                                <div class="p-0 m-0"><img src="/image/{{ $post->PostContent[$i]['photo'] }}" width="800px" class="img-fluid"> </div> <br> 
                             @else
                             @continue
                             @endif
                         @endfor
-                       
                     </article>
-                    
-                    <div class="mb-4 px-4">
+                    <div class="pb-3 pt-2 px-4 bg-light border border-light   ">
                         <a href="{{ route('post.show', $post->id) }}">
                             <button  href="" type="button" class="btn btn-primary btn-sm">{{$post->id}}</button>
                         </a>
@@ -55,40 +51,37 @@
                         @endauth
                     </div>
                     </div>
-                    
                     @endforeach
                     {{ $posts->links() }}
                 </div>
-                
                 <!-- Side widgets-->
                 <div class="col-lg-4">
-                    <div class="card mb-4">
-                        <div class="card-header">Categories</div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">Web Design</a></li>
-                                        <li><a href="#!">HTML</a></li>
-                                        <li><a href="#!">Freebies</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-6">
-                                    <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">JavaScript</a></li>
-                                        <li><a href="#!">CSS</a></li>
-                                        <li><a href="#!">Tutorials</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <!-- Side widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">Side Widget</div>
-                        <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
+                    <div id="contenedor">
+                        <iframe src="https://store.steampowered.com/widget/220/36/" frameborder="0" width="646" height="190"></iframe>
                     </div>
+                    
                 </div>
             </div>
         </div>
+
+        <style type="text/css">
+                        #contenedor {
+                        position: relative;
+                        padding-bottom: 56.25%;
+                        padding-top: 30px;
+                        height: 0;
+                        overflow: hidden;
+                        display:block;
+                        }
+                        #contenedor iframe,
+                        #contenedor object,
+                        #contenedor embed {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        }
+                    </style>
 @endsection

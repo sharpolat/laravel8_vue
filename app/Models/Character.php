@@ -32,6 +32,7 @@ class Character extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
     public function characterShow() {
         return $this->hasMany(CharacterShow::class);
     }

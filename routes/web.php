@@ -54,7 +54,8 @@ Route::resource('/parser', ParserAllPageController::class);
 Route::resource('/parserForKrisha', ParserAllPageForKrishaController::class);
 Route::get('/search', SearchController::class)->name('search');
 Route::get('/preview', [PreviewController::class, 'preview'])->name('preview');
-Route::get('/count/countIncrement', [CountIncrementController::class, 'countIncrement'])->name('count.countIncrement');
+Route::get('/count/countIncrement', [CountIncrementController::class, 'countIncrement', 'countCharacterIncrement'])->name('count.countIncrement');
+Route::get('/count/countCharacterIncrement', [CountIncrementController::class, 'countCharacterIncrement'])->name('count.countCharacterIncrement');
 
 Auth::routes();
 

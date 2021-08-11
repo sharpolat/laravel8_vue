@@ -14,50 +14,42 @@
                             id="title"
                             type="text"
                             class="form-control"
-                            minlength="3"
-                            placeholder="Заголовок"
-                            required>
+                            placeholder="Заголовок">
                 </div>
                 <div class="mb-2">
                     <input name="tags"
                             id="tags"
                             type="text"
                             class="form-control"
-                            minlength="3"
-                            placeholder="Теги"
-                            required>
+                            placeholder="Теги">
                 </div>
                 <div>
                     <input name="view_count"
                             id="view_count"
                             class="form-control"
                             type="hidden"
-                            value="{{ rand(0, 400) }}"
-                            required>
+                            value="{{ rand(0, 400) }}">
                 </div>
                 <div>
                     <input name="post_type_id"
                             id="post_type_id"
                             class="form-control"
                             type="hidden"
-                            value="{{ rand(0, 19) }}"
-                            required>
+                            value="{{ rand(0, 19) }}">
                 </div>
                 <div>
                     <input name="user_id"
                             id="user_id"
                             class="form-control"
                             type="hidden"
-                            value="{{ Auth::user()->id }}"
-                            required>
+                            value="{{ Auth::user()->id }}">
                 </div>
                 <div>
                     <input name="comment_count"
                             id="comment_count"
                             class="form-control"
                             type="hidden"
-                            value="{{ rand(0, 40) }}"
-                            required>
+                            value="{{ rand(0, 40) }}">
                 </div>
                 
                 @for($k = 0; $k < count($count); $k++)
@@ -67,8 +59,7 @@
                                 placeholder="Введите Текст"
                                 type="textarea"
                                 class="form-control"
-                                minlength="3"
-                                required>
+                                value="{{ old('body[$k]') }}">
                     </div>
                     
                     @elseif(($count[$k] == 'photo'))
@@ -78,9 +69,7 @@
                                 
                                 placeholder="Выберите файл"
                                 type="file"
-                                class="form-control-file"
-                                minlength="3"
-                                required>
+                                class="form-control-file">
                         </div>
                     </div>
                     @endif
@@ -91,6 +80,17 @@
                         type="hidden"
                         class="form-control"
                         value="{{ $post_id->id }}">
+                <!-- add new input field -->
+                <input type="hidden" name="textNameForText" value="text">
+                @foreach($count as $key)
+                <input type="hidden" name="count[]" value="{{ $key }}">
+                @endforeach
+                <input type="hidden" name="textNameForPhoto" value="photo">
+                    @foreach($count as $key)
+                    <input type="hidden" name="count[]" value="{{ $key }}">
+                @endforeach
+                <button type="submit" name="textIncrement" value="textIncrement" class="btn btn-outline-primary">добавить текст</button>
+                <button type="submit" name="photoIncrement" value="photoIncrement" class="btn btn-outline-primary">добавить фото</button>
                 <button type="submit" name="submitAction" value="Submit">Опубликовать</button>
                 <button type="submit" name="previewAction" value="Preview">Предпросмотр</button>
             </form>

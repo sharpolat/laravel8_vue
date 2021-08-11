@@ -8,11 +8,10 @@ use App\Models\Comment;
 use App\Models\PostContent;
 use App\Http\Requests\StorePostRequest;
 
-
-
 class PostController extends Controller
 {
     static $count;
+   
     /**
      * Display a listing of the resource.
      *
@@ -43,15 +42,22 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePostRequest $request)
+    public function store(Request $request)
     {   
+        // Submit button previewAction
         if(isset($request->previewAction)){
             return redirect()
                             ->route('preview')
                             ->withInput($request->input());
         }
+        if(isset($request->textIncrement) || isset($request->photoIncrement)){
+            return redirect()
+                            ->route('count.countIncrement')
+                            ->withInput($request->input());
+        }
         // Для начала создание самого поста для последующего добавление данных(post_contents)
-        $dataForPost = $request->only('title', 'tags', 'view_count', 'post_type_id', 'user_id', 'comment_count');
+        // !!!!! нужно прописать чтобы не было hidden input нужно брать инфу здесь !!!!!
+        $dataForPost = $request->only('title', 'tags', 'view_count', 'post_type_id', 'user_id', 'comment_count'); 
         $itemForPost = (new Post())->create($dataForPost);
         $postId = Post::latest()->first();
         // Добавление данных в Post->PostContent в разные поля бд, не смотря как много данных придет из вне
@@ -73,7 +79,6 @@ class PostController extends Controller
                 $dataForText2['body'] = $item;
                 $dataForText2['post_id'] = $postId['id'];
                 $itemForText = (new PostContent())->create($dataForText2);
-                echo $item . ' Text' . '<br>'; 
             }
         }
         if(isset($onlyImageData)) {
@@ -86,7 +91,6 @@ class PostController extends Controller
                             $postImage = date('YmdHis').gettimeofday()["usec"] . "." . $image->getClientOriginalExtension();
                             $image->move($destinationPath, $postImage);
                             $input['photo'] = "$postImage";
-                            echo 'photo' . $postImage . '<br>';
                         }
                     }
                     if($input['photo']) {
@@ -97,7 +101,6 @@ class PostController extends Controller
             }
         }
         $dataForText2 = $dataForText;
-        $dataForPhoto2 = $dataForPhoto;
         if(isset($arrayMergeForData)){
             foreach($arrayMergeForData as $item) {
                 if(is_readable($item)) {
@@ -108,7 +111,6 @@ class PostController extends Controller
                             $postImage = date('YmdHis').gettimeofday()["usec"] . "." . $image->getClientOriginalExtension();
                             $image->move($destinationPath, $postImage);
                             $input['photo'] = "$postImage";
-                            echo 'photo' . $postImage . '<br>';
                         }
                     }
                     if($input['photo']) {
@@ -120,7 +122,6 @@ class PostController extends Controller
                     $dataForText2['body'] = $item;
                     $dataForText2['post_id'] = $postId['id'];
                     $itemForText = (new PostContent())->create($dataForText2);
-                    echo $item . ' Text' . '<br>';
                 }
             }
         }

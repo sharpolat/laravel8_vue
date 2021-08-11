@@ -33,6 +33,7 @@ class CharacterShow extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
     public function character() {
         return $this->belongsTo(Character::class);
     }
