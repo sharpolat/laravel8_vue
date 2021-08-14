@@ -14,14 +14,16 @@
                             id="title"
                             type="text"
                             class="form-control"
-                            placeholder="Заголовок">
+                            placeholder="Заголовок"
+                            value="{{ old('title') }}">
                 </div>
                 <div class="mb-2">
                     <input name="tags"
                             id="tags"
                             type="text"
                             class="form-control"
-                            placeholder="Теги">
+                            placeholder="Теги"
+                            value="{{ old('tags') }}">
                 </div>
                 <div>
                     <input name="view_count"
@@ -55,21 +57,20 @@
                 @for($k = 0; $k < count($count); $k++)
                     @if($count[$k] == 'text')
                     <div class="mb-2">
-                        <input name="body[{{$k}}]"
+                        <textarea name="body[{{$k}}]"
                                 placeholder="Введите Текст"
-                                type="textarea"
-                                class="form-control"
-                                value="{{ old('body[$k]') }}">
+                                class="ck_editor_txt"
+                                id="ckeditor"
+                                >{{ old('body.'.$k) }}</textarea>
                     </div>
                     
                     @elseif(($count[$k] == 'photo'))
                     <div class="card mb-2 ">
                         <div class="card-body  p-2 m-2.">
                             <input name="photo[{{$k}}]"
-                                
-                                placeholder="Выберите файл"
-                                type="file"
-                                class="form-control-file">
+                                    placeholder="Выберите файл"
+                                    type="file"
+                                    class="form-control-file">
                         </div>
                     </div>
                     @endif
@@ -86,9 +87,6 @@
                 <input type="hidden" name="count[]" value="{{ $key }}">
                 @endforeach
                 <input type="hidden" name="textNameForPhoto" value="photo">
-                    @foreach($count as $key)
-                    <input type="hidden" name="count[]" value="{{ $key }}">
-                @endforeach
                 <button type="submit" name="textIncrement" value="textIncrement" class="btn btn-outline-primary">добавить текст</button>
                 <button type="submit" name="photoIncrement" value="photoIncrement" class="btn btn-outline-primary">добавить фото</button>
                 <button type="submit" name="submitAction" value="Submit">Опубликовать</button>
@@ -106,6 +104,11 @@
                         </div>
                     </div>
                 </div>
+                @endif
+                @if (Session::has('success'))
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle"></i> {{ Session::get('success') }}
+                    </div>
                 @endif
                 </div>
             <div class="col-lg-4">
@@ -139,4 +142,13 @@
     
         
     
+@endsection
+
+@section('scripts')
+<script>
+    var allEditors = document.querySelectorAll('.ck_editor_txt');
+        for (var i = 0; i < allEditors.length; ++i) {
+          ClassicEditor.create(allEditors[i]);
+        }
+</script>
 @endsection

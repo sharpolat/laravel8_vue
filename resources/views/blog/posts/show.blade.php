@@ -23,7 +23,7 @@
                         <section class="mb-5">
                         @for($i = 0; $i < count($postId->PostContent); $i++)
                             @if(isset($postId->PostContent[$i]['body']))
-                                <p class="fs-5 mb-1">{{ $postId->PostContent[$i]['body'] }} </p> <br>
+                                {!! $postId->PostContent[$i]['body'] !!}
                             @elseif(isset($postId->PostContent[$i]['photo']))
                                 <div class="p-0 m-0"><img src="/image/{{ $postId->PostContent[$i]['photo'] }}" width="680px" class="img-fluid"> </div> <br>
                             @else

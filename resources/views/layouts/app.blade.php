@@ -102,5 +102,7 @@
             @yield('content')
         </main>
     </div>
+    <script src="https://cdn.ckeditor.com/ckeditor5/29.1.0/classic/ckeditor.js"></script>
+    @yield('scripts')
 </body>
 </html>

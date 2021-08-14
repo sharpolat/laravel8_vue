@@ -44,16 +44,22 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {   
+        
         // Submit button previewAction
         if(isset($request->previewAction)){
             return redirect()
                             ->route('preview')
-                            ->withInput($request->input());
+                            ->withInput();
         }
-        if(isset($request->textIncrement) || isset($request->photoIncrement)){
+        if(isset($request->textIncrement)){
             return redirect()
-                            ->route('count.countIncrement')
-                            ->withInput($request->input());
+                            ->route('count.textCountIncrement')
+                            ->withInput();
+        }
+        if(isset($request->photoIncrement)){
+            return redirect()
+                            ->route('count.imageCountIncrement')
+                            ->withInput();
         }
         // Для начала создание самого поста для последующего добавление данных(post_contents)
         // !!!!! нужно прописать чтобы не было hidden input нужно брать инфу здесь !!!!!
@@ -156,7 +162,7 @@ class PostController extends Controller
         // dd($itemForPostContent, $itemForPost);
         if(isset($arrayMergeForData)) {
             if( $itemForImage && $itemForText) {
-                return back();
+                return back()->withSuccess('Пост создан успешно')->withInput();
             }
             else {
                 return back()->withErrors(['msg'=>'Ошибка заполнения поста'])
@@ -165,7 +171,7 @@ class PostController extends Controller
         }
         if(isset($onlyBodyData)) {
             if($itemForText) {
-                return back();
+                return back()->withSuccess('Пост создан успешно')->withInput();
             }
             else {
                 return back()->withErrors(['msg'=>'Ошибка заполнения поста'])
@@ -174,7 +180,7 @@ class PostController extends Controller
         }
         if(isset($onlyImageData)) {
             if($itemForImage) {
-                return back();
+                return back()->withSuccess('Пост создан успешно')->withInput();
             }
             else {
                 return back()->withErrors(['msg'=>'Ошибка заполнения поста'])

@@ -24,15 +24,20 @@
                             <!-- Post categories-->
                             <a class="badge bg-secondary text-decoration-none link-light" href="{{route('tag.show', $post->tags) }}">{{ $post->tags }}</a>
                         </header>
+                        
                         @for($i = 0; $i < count($post->PostContent); $i++)
                             @if(isset($post->PostContent[$i]['body']))
-                                <p class="fs-5 px-4 mb-1">{{ $post->PostContent[$i]['body'] }} </p> <br>
+                            <div class="px-4 mb-4">
+                                {!! $post->PostContent[$i]['body'] !!}
+                            </div>
                             @elseif(isset($post->PostContent[$i]['photo']))
                                 <div class="p-0 m-0"><img src="/image/{{ $post->PostContent[$i]['photo'] }}" width="800px" class="img-fluid"> </div> <br> 
                             @else
                             @continue
                             @endif
                         @endfor
+                        
+                        
                     </article>
                     <div class="pb-3 pt-2 px-4 bg-light border border-light   ">
                         <a href="{{ route('post.show', $post->id) }}">

@@ -9,7 +9,6 @@ use App\Models\Character;
 class CountIncrementController extends Controller
 {
     public function countIncrement(Request $request) {
-        dd($request->input());
         $count = ($request->input('count') !== null) ? $request->input('count') : $request->old('count');
         
         $resultForText = ($request->input('textNameForText') !== null) ? $request->input('textNameForText') : $request->old('textNameForText');
@@ -21,7 +20,24 @@ class CountIncrementController extends Controller
             array_push($count, $resultForPhoto);
         }
         $post_id = Post::latest()->first();
-        $request->flashOnly(['username', 'email']);
+        return view('blog.posts.create', compact('post_id','count'));
+    }
+
+    public function textCountIncrement(Request $request) {
+        
+        $count = $request->old('count');
+        array_push($count, 'text');
+        $post_id = Post::latest()->first();
+        return view('blog.posts.create', compact('post_id','count'));
+    }
+
+    public function imageCountIncrement(Request $request) {
+        $count = $request->old('count');
+        $resultForPhoto = $request->old('textNameForPhoto');
+        if($resultForPhoto){
+            array_push($count, $resultForPhoto);
+        }
+        $post_id = Post::latest()->first();
         return view('blog.posts.create', compact('post_id','count'));
     }
     public function countCharacterIncrement(Request $request) {  
