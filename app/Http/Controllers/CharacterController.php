@@ -40,7 +40,22 @@ class CharacterController extends Controller
      */
     public function store(Request $request)
     {
-       
+        
+        if(isset($request->titleAdd)){
+            return redirect()
+                            ->route('count.characterTitleCountIncrement')
+                            ->withInput();
+        }
+        if(isset($request->textAdd)){
+            return redirect()
+                            ->route('count.characterTextCountIncrement')
+                            ->withInput();
+        }
+        if(isset($request->imageAdd)){
+            return redirect()
+                            ->route('count.characterImageCountIncrement')
+                            ->withInput();
+        }
         $dataForCharacterCreate = $request->only('name', 'mainBody', 'mainPhoto');
         $imagesForMainPhotos = array();
         $imagesForMainPhotos[] = $request->file('mainPhoto');
@@ -52,11 +67,13 @@ class CharacterController extends Controller
                 $itemForPost['mainPhoto'] = "$postImage";
             }
         }
+        
         $doneData = Character::create([
             'body' => $dataForCharacterCreate['mainBody'],
             'name' => $dataForCharacterCreate['name'],
             'photo' => $itemForPost['mainPhoto'],
         ])->save();
+        
         $characterId = Character::latest()->first();
         $dataForTitle = $request->only('title', 'character_id');
         $dataForBody = $request->only('body', 'character_id');
@@ -83,17 +100,15 @@ class CharacterController extends Controller
                             $postImage = date('YmdHis').gettimeofday()["usec"] . "." . $image->getClientOriginalExtension();
                             $image->move($destinationPath, $postImage);
                             $input['photo'] = "$postImage";
-                            
                         }
-                        
                     }
                     if($input['photo']) {
                         $input['character_id'] = $characterId['id'];
                         $itemForImage = (new CharacterShow())->create($input);
                     }
+                    
                 }
                 elseif(strlen($item) < 30){
-                    
                     $dataForTitle2['title'] = $item;
                     $dataForTitle2['character_id'] = $characterId['id'];
                     $itemForTitle = (new CharacterShow())->create($dataForTitle2);
@@ -101,11 +116,12 @@ class CharacterController extends Controller
                 else{
                     $dataForBody2['body'] = $item;
                     $dataForBody2['character_id'] = $characterId['id'];
-                    $itemForTitle = (new CharacterShow())->create($dataForTitle2);
+                    $itemForBody2 = (new CharacterShow())->create($dataForBody2);
                 }
             }
         }
-        return back();
+        
+        return back()->withSuccess('Пост создан успешно')->withInput();
     }
 
     /**

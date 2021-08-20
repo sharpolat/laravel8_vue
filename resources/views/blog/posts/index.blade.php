@@ -31,12 +31,11 @@
                                 {!! $post->PostContent[$i]['body'] !!}
                             </div>
                             @elseif(isset($post->PostContent[$i]['photo']))
-                                <div class="p-0 m-0"><img src="/image/{{ $post->PostContent[$i]['photo'] }}" width="800px" class="img-fluid"> </div> <br> 
+                                <div class="p-0 m-0"><a href="/image/{{ $post->PostContent[$i]['photo'] }}"><img src="/image/{{ $post->PostContent[$i]['photo'] }}" width="800px" class="img-fluid"></a></div> <br> 
                             @else
                             @continue
                             @endif
                         @endfor
-                        
                         
                     </article>
                     <div class="pb-3 pt-2 px-4 bg-light border border-light   ">

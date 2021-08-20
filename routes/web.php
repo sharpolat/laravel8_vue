@@ -54,10 +54,11 @@ Route::resource('/parser', ParserAllPageController::class);
 Route::resource('/parserForKrisha', ParserAllPageForKrishaController::class);
 Route::get('/search', SearchController::class)->name('search');
 Route::get('/preview', [PreviewController::class, 'preview'])->name('preview');
-Route::get('/count/countIncrement', [CountIncrementController::class, 'countIncrement', 'countCharacterIncrement'])->name('count.countIncrement');
-Route::get('/count/textCountIncrement', [CountIncrementController::class, 'textCountIncrement', 'textCountCharacterIncrement'])->name('count.textCountIncrement');
-Route::get('/count/imageCountIncrement', [CountIncrementController::class, 'imageCountIncrement', 'imageCountCharacterIncrement'])->name('count.imageCountIncrement');
-Route::get('/count/countCharacterIncrement', [CountIncrementController::class, 'countCharacterIncrement'])->name('count.countCharacterIncrement');
+Route::get('/count/textCountIncrement', [CountIncrementController::class, 'textCountIncrement'])->name('count.textCountIncrement');
+Route::get('/count/imageCountIncrement', [CountIncrementController::class, 'imageCountIncrement'])->name('count.imageCountIncrement');
+Route::get('/count/characterTitleCountIncrement', [CountIncrementController::class, 'characterTitleCountIncrement'])->name('count.characterTitleCountIncrement');
+Route::get('/count/characterTextCountIncrement', [CountIncrementController::class, 'characterTextCountIncrement'])->name('count.characterTextCountIncrement');
+Route::get('/count/characterImageCountIncrement', [CountIncrementController::class, 'characterImageCountIncrement'])->name('count.characterImageCountIncrement');
 
 Auth::routes();
 

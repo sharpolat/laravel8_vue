@@ -83,10 +83,10 @@
                         value="{{ $post_id->id }}">
                 <!-- add new input field -->
                 <input type="hidden" name="textNameForText" value="text">
+                <input type="hidden" name="textNameForPhoto" value="photo">
                 @foreach($count as $key)
                 <input type="hidden" name="count[]" value="{{ $key }}">
                 @endforeach
-                <input type="hidden" name="textNameForPhoto" value="photo">
                 <button type="submit" name="textIncrement" value="textIncrement" class="btn btn-outline-primary">добавить текст</button>
                 <button type="submit" name="photoIncrement" value="photoIncrement" class="btn btn-outline-primary">добавить фото</button>
                 <button type="submit" name="submitAction" value="Submit">Опубликовать</button>
@@ -116,23 +116,7 @@
                     <button type="button" class="btn btn-outline-primary">ссылка создания персонажа</button>
                 </a>  
                 <!-- форма добавление + 1 text -->
-                <form method="GET" action="{{ route('count.countIncrement') }}">
-                    @csrf
-                    <input type="hidden" name="textNameForText" value="text">
-                    @foreach($count as $key)
-                    <input type="hidden" name="count[]" value="{{ $key }}">
-                    @endforeach
-                    <button type="submit" class="btn btn-outline-primary">добавить текст</button>
-                </form>
-                <!-- форма добавление + 1 photo -->
-                <form method="GET" action="{{ route('count.countIncrement') }}">
-                    @csrf
-                    <input type="hidden" name="textNameForPhoto" value="photo">
-                    @foreach($count as $key)
-                    <input type="hidden" name="count[]" value="{{ $key }}">
-                    @endforeach
-                    <button type="submit" class="btn btn-outline-primary">добавить фото</button>
-                </form>
+                
             </div>
         </div>
     </div>

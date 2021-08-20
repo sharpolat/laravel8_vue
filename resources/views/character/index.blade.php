@@ -21,7 +21,7 @@
       <img width="800px" class="img-fluid" src="/image/{{ $character->photo }}">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark"><a href="{{ route('character.show', $character->id) }}">{{ $character->name }}</a></strong>
-        {{ $character->body }}
+        {!! $character->body !!}
         @auth 
           @if(Auth::user()->is_admin == 1)
             <form method="POST" action=" {{ route('character.destroy', $character->id) }} ">
@@ -62,9 +62,11 @@
     @foreach($mainCharacters as $character)
     <div class="media text-muted pt-3">
       <img class="mr-2 rounded" style="width: 32px; height: 32px;" src="/image/{{ $character->photo }}" >
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+      
+      <div>
+        <p class="media-body pb-3 mb-0 small">
         <strong class="d-block text-gray-dark"><a href="{{ route('character.show', $character->id) }}">{{ $character->name }}</a></strong>
-        {{ $character->body }}
+        {!! $character->body !!}</div>
         @auth 
           @if(Auth::user()->is_admin == 1)
             <form method="POST" action=" {{ route('character.destroy', $character->id) }} ">
@@ -89,7 +91,7 @@
       <img alt="32x32" class="mr-2 rounded" style="width: 32px; height: 32px;" src="/image/{{ $character->photo }}" data-holder-rendered="true">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark"><a href="{{ route('character.show', $character->id) }}">{{ $character->name }}</a></strong>
-        {{ $character->body }}
+        {!! $character->body !!}
         @auth 
           @if(Auth::user()->is_admin == 1)
             <form method="POST" action=" {{ route('character.destroy', $character->id) }} ">

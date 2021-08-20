@@ -8,25 +8,65 @@
                 <div class="col-lg-8">
                     <div class="card mb">
                         <h3 class="card-header">{{ $characterData->name }}</h3>
-                        <div class="card-body">
-                            <h5 class="card-title">Инфа поотм добавлю</h5>
-                            <h6 class="card-subtitle text-muted">Их мир откуда, раса(нужно добавить в бд character)</h6>
+                        
+                        <div class="container">
+                            <article class="row single-post mt-3 no-gutters">
+                                <div class="col-lg-12">
+                                    <div class="image-wrapper float-right pr-3">
+                                    <img src="/image/{{ $characterData->photo }}" width="200px" height="200" class="rounded image-wrapper">
+                                    </div>
+                                    <div class="single-post-content-wrapper">
+                                    {!! $characterData->body !!}
+                                    </div>
+                                </div>
+                            </article>
                         </div>
-                        <div class="p-0 m-0"><img src="/image/{{ $characterData->photo }}" width="200px" class="img-fluid"> </div>
-                        
-                        
                     </div>
+                    
+                    
+                            
+                                <div class="row">
+                                <div class="col">
+                                @foreach($characterData->characterShow as $key)
+                    
+                                @if(isset($key->title))
+                                <h3 class="card-header">{!! $key->title !!}</h3>
+                                @endif
+                                
+                                @if(isset($key->photo))
+                                <img src="/image/{{ $key->photo }}" width="200px" height="200" class="float-left">
+                                @endif
+                                @if(isset($key->body))
+                                <div>
+                                {!! $key->body !!}
+                                </div>
+                                @endif
+                                
+                                
+                                @endforeach
+                                    
+                                </div>
+                                </div>
+
+
+                                
+                                
+
+                            
+                    
+                    
+                    
                     @foreach($characterData->characterShow as $key)
                     <div class="card">
-                        <div class="card-body">
+                        
                             @if(isset($key->title))
-                                <h5 class="card-title">{{$key->title}}</h5>
+                            <h3 class="card-header">{!! $key->title !!}</h3>
                             @elseif(isset($key->body))
-                                <p class="card-text">{{$key->body}}</p>
+                            <div class="card-text p-2 m-2">{!! $key->body !!}</div>
                             @else(isset($key->photo))
-                            <div class="p-0 m-0"><img src="/image/{{ $key->photo }}" width="600px" class="img-fluid"> </div> <br>
+                            <div class="p-0 m-0"><img src="/image/{{ $key->photo }}" width="200px" height="200" class="rounded image-wrapper"> </div> <br>
                             @endif
-                        </div>
+                        
                     </div>
                     @endforeach
                 </div>

@@ -8,23 +8,9 @@ use App\Models\Character;
 
 class CountIncrementController extends Controller
 {
-    public function countIncrement(Request $request) {
-        $count = ($request->input('count') !== null) ? $request->input('count') : $request->old('count');
-        
-        $resultForText = ($request->input('textNameForText') !== null) ? $request->input('textNameForText') : $request->old('textNameForText');
-        $resultForPhoto = ($request->input('textNameForPhoto') !== null) ? $request->input('textNameForPhoto') : $request->old('textNameForPhoto');
-        
-        if($resultForText){
-            array_push($count, $resultForText);
-        }else{
-            array_push($count, $resultForPhoto);
-        }
-        $post_id = Post::latest()->first();
-        return view('blog.posts.create', compact('post_id','count'));
-    }
-
+    
+    // Count For posts editor
     public function textCountIncrement(Request $request) {
-        
         $count = $request->old('count');
         array_push($count, 'text');
         $post_id = Post::latest()->first();
@@ -33,27 +19,29 @@ class CountIncrementController extends Controller
 
     public function imageCountIncrement(Request $request) {
         $count = $request->old('count');
-        $resultForPhoto = $request->old('textNameForPhoto');
-        if($resultForPhoto){
-            array_push($count, $resultForPhoto);
-        }
+        array_push($count, 'photo');
         $post_id = Post::latest()->first();
         return view('blog.posts.create', compact('post_id','count'));
     }
-    public function countCharacterIncrement(Request $request) {  
-        $count = $request->input('count');
-        $resultForTitle = $request->input('textNameForTitle');
-        $resultForPhoto = $request->input('textNameForPhoto');
-        $resultForBody = $request->input('textNameForBody');
-        if($resultForTitle){
-            array_push($count, $resultForTitle);
-        }
-        elseif($resultForPhoto) {
-            array_push($count, $resultForPhoto);
-        }
-        else{
-            array_push($count, $resultForBody);
-        }
+
+    // Count For characters editor
+    public function characterTitleCountIncrement(Request $request) {
+        $count = $request->old('count');
+        array_push($count, 'title');
+        $characters = Character::latest()->first();
+        return view('character.create', compact('characters', 'count'));
+    }
+
+    public function characterTextCountIncrement(Request $request) {
+        $count = $request->old('count');
+        array_push($count, 'body');
+        $characters = Character::latest()->first();
+        return view('character.create', compact('characters', 'count'));
+    }
+
+    public function characterImageCountIncrement(Request $request) {
+        $count = $request->old('count');
+        array_push($count, 'photo');
         $characters = Character::latest()->first();
         return view('character.create', compact('characters', 'count'));
     }
