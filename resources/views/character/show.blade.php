@@ -22,53 +22,27 @@
                             </article>
                         </div>
                     </div>
-                    
-                    
-                            
-                                <div class="row">
-                                <div class="col">
+                        <div class="container mx-0 px-0">
+                            <article class="row single-post mt-3 no-gutters">
+                                <div class="col-lg-12">
                                 @foreach($characterData->characterShow as $key)
-                    
                                 @if(isset($key->title))
                                 <h3 class="card-header">{!! $key->title !!}</h3>
                                 @endif
-                                
                                 @if(isset($key->photo))
-                                <img src="/image/{{ $key->photo }}" width="200px" height="200" class="float-left">
+                                    <div class="image-wrapper float-left pr-3">
+                                    <img src="/image/{{ $key->photo }}" width="130px" height="100" class="rounded image-wrapper">
+                                    </div>
                                 @endif
                                 @if(isset($key->body))
-                                <div>
-                                {!! $key->body !!}
-                                </div>
+                                    <div class="single-post-content-wrapper">
+                                    {!! $key->body !!}
+                                    </div>
                                 @endif
-                                
-                                
                                 @endforeach
-                                    
                                 </div>
-                                </div>
-
-
-                                
-                                
-
-                            
-                    
-                    
-                    
-                    @foreach($characterData->characterShow as $key)
-                    <div class="card">
-                        
-                            @if(isset($key->title))
-                            <h3 class="card-header">{!! $key->title !!}</h3>
-                            @elseif(isset($key->body))
-                            <div class="card-text p-2 m-2">{!! $key->body !!}</div>
-                            @else(isset($key->photo))
-                            <div class="p-0 m-0"><img src="/image/{{ $key->photo }}" width="200px" height="200" class="rounded image-wrapper"> </div> <br>
-                            @endif
-                        
-                    </div>
-                    @endforeach
+                            </article>
+                        </div>
                 </div>
                 
                 <!-- Side widgets-->
@@ -78,7 +52,7 @@
                         <div class="card-body">
                                     <ul class="list-unstyled mb-0">
                                     @foreach($chracterRandNames as $key)
-                                      <li><a href="#!">{{$key->name}}</a></li>
+                                      <li><a href="{{ route('character.show', $key->id) }}">{{$key->name}}</a></li>
                                     @endforeach
                                     </ul> 
                             </div>

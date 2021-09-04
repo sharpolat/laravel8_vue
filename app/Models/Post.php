@@ -53,6 +53,10 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function nestedComment() {
+        return $this->hasMany(NestedComment::class);
+    }
+
     public function postContent() {
         return $this->hasMany(PostContent::class);
     }

@@ -10,6 +10,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\CountIncrementController;
 use App\Http\Controllers\ParserAllPageController;
 use App\Http\Controllers\ParserAllPageForKrishaController;
+use App\Http\Controllers\NestedCommentController;
 use App\Http\Controllers\PreviewController;
 use Illuminate\Http\Request;
 use App\Http\Resources\PostCollection;
@@ -49,6 +50,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('post', PostController::class);
 Route::resource('tag', TagController::class);
 Route::resource('comment', CommentController::class);
+Route::resource('nestedComment', NestedCommentController::class);
 Route::resource('character', CharacterController::class);
 Route::resource('/parser', ParserAllPageController::class);
 Route::resource('/parserForKrisha', ParserAllPageForKrishaController::class);

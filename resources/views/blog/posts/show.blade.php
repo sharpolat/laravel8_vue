@@ -38,9 +38,10 @@
                         <div class="card bg-light">
                             <div class="card-body">
                                 <!-- Comment form-->
-                                <form method="POST" action="{{ route('comment.store') }}">
+                                <form method="POST" action="{{ route('comment.store') }}" class="pb-3">
                                     @csrf
-                                    <input placeholder="комментарий" type="text" name="body" value="">
+                                    
+                                    <textarea placeholder="комментарий" class="form-control" type="text" name="body"></textarea>
                                     <input type="hidden" name="post_id" value="{{ $postId->id }}">
                                     @auth
                                     <input type="hidden" name="user_display_name" value="{{ Auth::user()->name }}">
@@ -51,9 +52,9 @@
                                     <input type="hidden" name="user_display_name" value="guest">
                                     @endguest
 
-                                    <button type="submit">отправить</button>
+                                    <button type="submit" class="btn btn-outline-primary btn-sm">отправить</button>
 
-                                    <button type="reset">очистить</button>
+                                    <button type="reset" class="btn btn-outline-primary btn-sm">очистить</button>
                                 </form>
                                 @if( $errors->any() )
                                 <div class="alert alert-danger" role="alert">
@@ -63,14 +64,40 @@
 
                                 @foreach($comments as $comment)
                                 <div class="media">
-                                    <img class="d-flex mr-3" src="/images/pathToYourImage.png" alt="Generic">
                                     <div class="media-body">
                                         <h5 class="mt-0">{{ $comment->user_display_name  }}</h5>
-                                        {{ $comment->body }}
-                                        <div class="d-flex flex-sm-row">
-                                            <button type="submit" class="btn btn-primary btn-sm">
-                                                ответить
-                                            </button>
+                                        <p class="mb-0 text-break">{{ $comment->body }}</p>
+                                        
+                                            <div class="btn-group">
+                                                <a class=" dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    ответить
+                                                </a>
+                                                <div class="dropdown-menu">
+                                                    <div class="d-flex flex-sm-row">
+
+                                                        <form method="POST" action="{{ route('nestedComment.store') }}">
+                                                        @csrf
+                                                        <textarea placeholder="комментарий" type="text" name="body"></textarea>
+                                                        <input type="hidden" name="post_id" value="{{ $postId->id }}">
+                                                        <input type="hidden" name="comment_id" value="{{ $comment->id }}">
+                                                        @auth
+                                                        <input type="hidden" name="user_display_name" value="{{ Auth::user()->name }}">
+                                                        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                                        @endauth
+                                                        @guest
+                                                        <input type="hidden" name="user_id" value="1">
+                                                        <input type="hidden" name="user_display_name" value="guest">
+                                                        @endguest
+
+                                                        <button type="submit">отправить</button>
+
+                                                        <button type="reset">очистить</button>
+                                                        </form>
+
+                                                    <div>
+                                                </div>
+                                                </div>
+                                            </div>
                                         @auth
                                             @if(Auth::user()->id == $comment->user->id)
                                                 <form method="POST" action="{{ route('comment.destroy', $comment->id) }}">
@@ -85,50 +112,31 @@
                                             @endif
                                         @endauth
                                         </div>
-                                        <!-- <div class="media mt-3">
-                                            <a class="d-flex pr-3" href="#">
-                                                <img src="/images/pathToYourImage.png" alt="Generic">
-                                            </a>
-                                            <div class="media-body">
-                                                <h5 class="mt-0">Media heading</h5>
-                                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                                        
+                                        @foreach($comment->nestedComment as $key)
+                                            @if(isset($key->body))
+                                            <!-- Nested comment -->
+                                            <div class="verticalLine">
+                                            <div class="media mt-2">
+                                                <a class="d-flex pr-3" href="#">
+                                                </a>
+                                                <div class="media-body">
+                                                    <h5 class="mt-0">{{ $key->user_display_name }}</h5>
+                                                    <p class="text-break"> {{ $key->body }} </p>
+                                                </div>
                                             </div>
-                                        </div> -->
+                                            </div>
+                                            
+                                            @endif
+                                        @endforeach
+                                        
                                     </div>
                                 </div>
+                                <hr>
                                 @endforeach
 
 
-                                @foreach($comments as $comment)
-                                    <!-- Comment with nested comments-->
-                                    <div class="d-flex mt-4">
-                                        <!-- Parent comment-->
-                                        <div class="ms-3">
-                                            <div class="fw-bold">{{ $comment->user_display_name  }}</div>
-                                            {{ $comment->body }}
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="d-flex flex-sm-row">
-                                            <button type="submit" class="btn btn-primary btn-sm">
-                                                ответить
-                                            </button>
-                                        @auth
-                                            @if(Auth::user()->id == $comment->user->id)
-                                                <form method="POST" action="{{ route('comment.destroy', $comment->id) }}">
-                                                @method('delete')
-                                                @csrf
-                                                <div>
-                                                    <button type="submit" class="btn btn-primary btn-sm">
-                                                        удалить
-                                                    </button>
-                                                </div>
-                                                </form>
-                                            @endif
-                                        @endauth
-                                    </div>
-                                    <hr>
-                                @endforeach
+                                
                             </div>
                         </div>
                     </section>

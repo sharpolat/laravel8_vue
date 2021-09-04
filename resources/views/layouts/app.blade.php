@@ -54,24 +54,24 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Search widget-->
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <div class="input-group">
                                 <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
                                 <button class="btn btn-secondary btn-md my-2 my-sm-0 ml-3" id="button-search" type="button">Search</button>
                             </div>
-                        </li>    
+                        </li>     -->
                         <!-- Categories widget-->
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Characters') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('login') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Lore') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else

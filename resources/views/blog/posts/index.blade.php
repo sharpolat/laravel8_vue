@@ -40,7 +40,7 @@
                     </article>
                     <div class="pb-3 pt-2 px-4 bg-light border border-light   ">
                         <a href="{{ route('post.show', $post->id) }}">
-                            <button  href="" type="button" class="btn btn-primary btn-sm">{{$post->id}}</button>
+                            <button type="button" class="btn btn-primary btn-sm">коментарии</button>
                         </a>
                         @auth
                             @if(Auth::user()->is_admin == 1)
@@ -69,7 +69,8 @@
             </div>
         </div>
 
-        <style type="text/css">
+        <style 
+        type="text/css">
                         #contenedor {
                         position: relative;
                         padding-bottom: 56.25%;
@@ -87,5 +88,7 @@
                         width: 100%;
                         height: 100%;
                         }
-                    </style>
+                        
+        </style>
+        
 @endsection

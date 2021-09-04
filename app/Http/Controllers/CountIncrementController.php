@@ -9,7 +9,7 @@ use App\Models\Character;
 class CountIncrementController extends Controller
 {
     
-    // Count For posts editor
+    // Count for posts editor
     public function textCountIncrement(Request $request) {
         $count = $request->old('count');
         array_push($count, 'text');
@@ -24,7 +24,7 @@ class CountIncrementController extends Controller
         return view('blog.posts.create', compact('post_id','count'));
     }
 
-    // Count For characters editor
+    // Count for characters editor
     public function characterTitleCountIncrement(Request $request) {
         $count = $request->old('count');
         array_push($count, 'title');

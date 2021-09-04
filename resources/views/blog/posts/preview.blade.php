@@ -21,7 +21,15 @@
                         
                         <!-- Post content-->
                         <section class="mb-5">
-                        
+                        @for($i = 0; $i < count($old->body); $i++)
+                            @if(isset($old[$i]['body']))
+                                {!! $old[$i]['body'] !!}
+                            @elseif(isset($old[$i]['photo']))
+                                <div class="p-0 m-0"><img src="/image/{{ $postId->PostContent[$i]['photo'] }}" width="680px" class="img-fluid"> </div> <br>
+                            @else
+                            @continue
+                            @endif
+                        @endfor
                         </section>
                     </article>
                     

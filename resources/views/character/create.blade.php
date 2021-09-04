@@ -13,6 +13,7 @@
             <form method="POST" action="{{ route('character.store') }}" enctype="multipart/form-data">
                 @csrf
                 <h3>Данные которые будут показаны в index</h3>
+                
                 <div class="mb-2">
                     <input name="name" id="name" type="text" class="form-control" value="{{ old('name') }}" placeholder="Name">
                     <textarea name="mainBody" placeholder="Основная информация на 100 слов" type="textarea" class="ck_editor_txt" id="ckeditor">{{ old('mainBody') }}</textarea>
@@ -21,6 +22,10 @@
                             <input name="mainPhoto" type="file" class="form-control-file">
                         </div>
                     </div>
+                </div>
+                <div class="form-check">
+                    <input name="mainCharacter" type="checkbox" class="form-check-input">
+                    <label class="form-check-label">Главный персонаж???</label>
                 </div>
                 <h3>Данные которые будут показаны в show</h3>
                 @for($k = 0; $k < count($count); $k++) 
@@ -39,17 +44,18 @@
                 </div>
                 @endif
                 @endfor
-        <input type="hidden" name="textNameForTitle" value="title">
-        <input type="hidden" name="textNameForBody" value="body">
-        <input type="hidden" name="textNameForPhoto" value="photo">
-        @foreach($count as $key)
-        <input type="hidden" name="count[]" value="{{ $key }}">
-        @endforeach
-        <button type="submit" name="titleAdd" value="titleAdd" class="btn btn-outline-primary">добавить title</button>
-        <button type="submit" name="textAdd" value="textAdd" class="btn btn-outline-primary">добавить текст к title</button>
-        <button type="submit" name="imageAdd" value="imageAdd" class="btn btn-outline-primary">добавить изображение</button>
-        <button type="submit">опубликовать</button>
-        </form>
+                <input type="hidden" name="textNameForTitle" value="title">
+                <input type="hidden" name="textNameForBody" value="body">
+                <input type="hidden" name="textNameForPhoto" value="photo">
+                @foreach($count as $key)
+                <input type="hidden" name="count[]" value="{{ $key }}">
+                @endforeach
+                <button type="submit" name="titleAdd" value="titleAdd" class="btn btn-outline-primary">1. добавить title</button>
+                <button type="submit" name="imageAdd" value="imageAdd" class="btn btn-outline-primary">2. добавить изображение</button>
+                <button type="submit" name="textAdd" value="textAdd" class="btn btn-outline-primary">3. добавить основной текст</button>
+                
+                <button type="submit">опубликовать</button>
+            </form>
 
         @if($errors->any())
         <div class="row justify-content-center">

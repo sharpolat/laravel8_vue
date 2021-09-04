@@ -18,7 +18,7 @@ class CreatePostsTable extends Migration
             $table->string('title', 250);
             $table->unsignedBigInteger('view_count');
             $table->string('tags')->nullable();
-            $table->integer('comment_count');
+            $table->integer('comment_count')->defaul(0);
             $table->timestamps();
 
             $table->foreignId('post_type_id')->constrained();

@@ -42,4 +42,8 @@ class Comment extends Model
     public function post() {
         return $this->belongsTo(Post::class);
     }
+
+    public function nestedComment() {
+        return $this->hasMany(NestedComment::class);
+    }
 }

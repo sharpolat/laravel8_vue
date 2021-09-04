@@ -15,8 +15,8 @@ class CharacterController extends Controller
      */
     public function index()
     {
-        $mainCharacters = Character::latest()->paginate(3, ['*'], 'mainCharacters');
-        $npcCharacters = Character::inRandomOrder()->paginate(3, ['*'], 'npcCharacters');
+        $mainCharacters = Character::where('is_main_character', 1)->latest()->paginate(3, ['*'], 'mainCharacters');
+        $npcCharacters = Character::where('is_main_character', 0)->latest()->paginate(3, ['*'], 'npcCharacters');
         return view('character.index', compact('mainCharacters', 'npcCharacters'));
     }
 
@@ -67,11 +67,12 @@ class CharacterController extends Controller
                 $itemForPost['mainPhoto'] = "$postImage";
             }
         }
-        
+        $is_main_character = isset($request['mainCharacter']) ? 1 : 0;
         $doneData = Character::create([
             'body' => $dataForCharacterCreate['mainBody'],
             'name' => $dataForCharacterCreate['name'],
             'photo' => $itemForPost['mainPhoto'],
+            'is_main_character' => $is_main_character,
         ])->save();
         
         $characterId = Character::latest()->first();

@@ -6,12 +6,19 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Comment;
 use App\Models\PostContent;
+use App\Services\Blog\BlogService;
+use Illuminate\Auth\AuthServiceProvider;
 use App\Http\Requests\StorePostRequest;
 
 class PostController extends Controller
 {
-    static $count;
-   
+    protected $blogService;
+
+    public function __construct(BlogService $blogService)
+    {
+        $this->blogService = $blogService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -45,7 +52,11 @@ class PostController extends Controller
     public function store(Request $request)
     {   
         
+        // проверка input hidden на подмену
+        // $isUserIdCorrect = ;
+        // dd($request, $isUserIdCorrect);
         // Submit button previewAction
+        
         if(isset($request->previewAction)){
             return redirect()
                             ->route('preview')
@@ -63,7 +74,8 @@ class PostController extends Controller
         }
         // Для начала создание самого поста для последующего добавление данных(post_contents)
         // !!!!! нужно прописать чтобы не было hidden input нужно брать инфу здесь !!!!!
-        $dataForPost = $request->only('title', 'tags', 'view_count', 'post_type_id', 'user_id', 'comment_count'); 
+        $this->blogService->postCreate($request,'title', 'tags', 'view_count', 'post_type_id', 'user_id', 'comment_count');
+        $dataForPost = $request->only('title', 'tags', 'view_count', 'post_type_id', 'user_id', 'comment_count');
         $itemForPost = (new Post())->create($dataForPost);
         $postId = Post::latest()->first();
         // Добавление данных в Post->PostContent в разные поля бд, не смотря как много данных придет из вне
@@ -199,7 +211,7 @@ class PostController extends Controller
     public function show($id)
     {
         $postId = Post::with('PostContent')->find($id);
-        $comments = Comment::where("post_id", "=", $id)->with('user')->latest()->get();
+        $comments = Comment::where("post_id", "=", $id)->with('user')->with('nestedComment')->latest()->get();
         return view('blog.posts.show', compact('postId', 'comments'));
     }
 
