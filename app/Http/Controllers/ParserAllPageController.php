@@ -31,7 +31,7 @@ class ParserAllPageController extends Controller
         $start = microtime(true);
         for($i = $increment; $i < $whileTrueIncrement; $i++) {
             $rowIncrement = $i;
-            $urlPlusId = 'https://kolesa.kz/a/show/' . $i;
+            $urlPlusId = 'https://' . $i;
             $file_headers = @get_headers($urlPlusId); 
             if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') 
             { 
@@ -58,7 +58,7 @@ class ParserAllPageController extends Controller
         $whileTrueIncrement2 = $result + 1000;
         for($i = $result; $i < $whileTrueIncrement2; $i++) {
             $rowIncrement = $i;
-            $urlPlusId = 'https://kolesa.kz/a/show/' . $i;
+            $urlPlusId = 'https://' . $i;
             $file_headers = @get_headers($urlPlusId); 
             if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') 
             { 
@@ -85,7 +85,7 @@ class ParserAllPageController extends Controller
         $whileTrueIncrement3 = $result + 100;
         for($i = $result; $i < $whileTrueIncrement3; $i++) {
             $rowIncrement = $i;
-            $urlPlusId = 'https://kolesa.kz/a/show/' . $i;
+            $urlPlusId = 'https://' . $i;
             $file_headers = @get_headers($urlPlusId); 
             if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') 
             { 
@@ -113,7 +113,7 @@ class ParserAllPageController extends Controller
         // $whileTrueIncrement = $increment + 100;
         // for($i = $increment; $i < $whileTrueIncrement; $i++) {
         //     $rowIncrement = $i;
-        //     $urlPlusId = 'https://kolesa.kz/a/show/' . $i;
+        //     $urlPlusId = 'https://' . $i;
         //     $file_headers = @get_headers($urlPlusId); 
         //     if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') 
         //     { 
@@ -187,13 +187,13 @@ class ParserAllPageController extends Controller
         // ]);
         
 
-        return view('autodata.parser.parser', compact('idArr'));
+        // return view('autodata.parser.parser', compact('idArr'));
         
         // Вывод последних из главной страницы
 
         // $carName = [];
         // foreach ($idArr as $id) {
-        //     $urlPlusId = 'https://kolesa.kz/a/show/' . $id;
+        //     $urlPlusId = 'https://' . $id;
         //     $html = file_get_contents($urlPlusId); 
         //     $dom->loadHTML($html);
         //     dd($dom);
@@ -218,7 +218,7 @@ class ParserAllPageController extends Controller
 
 
         
-        // $html = file_get_contents('https://kolesa.kz/cars/'); 
+        // $html = file_get_contents('https://'); 
         // $dom->loadHTML($html);
         
         // dd($dom);
@@ -256,7 +256,7 @@ class ParserAllPageController extends Controller
      */
     public function create()
     {
-        return view('autodata.parser.test');
+        //
     }
 
     /**
@@ -278,7 +278,7 @@ class ParserAllPageController extends Controller
      */
     public function show($id)
     {
-        $urlPlusId = 'https://kolesa.kz/a/show/' . $id;
+        $urlPlusId = 'https://' . $id;
         $dom = new DOMDocument;
         libxml_use_internal_errors(true);
         $html = file_get_contents($urlPlusId); 

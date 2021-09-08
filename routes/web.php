@@ -29,8 +29,7 @@ use App\Models\Post;
 */
 
 Route::get('/', function () {
-    
-    return view('welcome');
+    return redirect('post');
 });
 
 Auth::routes();
@@ -38,18 +37,13 @@ Auth::routes();
 //parser 
 // Route::get('/parser', ParserController::class)->name('parser');
 
-Route::get('test', function() {
-    $result = DB::select('select * from characters where id > 3');
-    $resultForHash = 'sharpolat';
-    $resultForHash2 = Hash::make('sharpolat');
-    if (Hash::check($resultForHash, $resultForHash2)) {
-        echo Hash::make($resultForHash), $resultForHash2;
-    }else{echo "not ok";}
-});
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('post', PostController::class);
 Route::resource('tag', TagController::class);
 Route::resource('comment', CommentController::class);
+Route::get('lore', function() {
+    return view('lore.index');
+});
 Route::resource('nestedComment', NestedCommentController::class);
 Route::resource('character', CharacterController::class);
 Route::resource('/parser', ParserAllPageController::class);

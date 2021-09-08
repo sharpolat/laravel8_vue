@@ -90,7 +90,7 @@
                 <button type="submit" name="textIncrement" value="textIncrement" class="btn btn-outline-primary">добавить текст</button>
                 <button type="submit" name="photoIncrement" value="photoIncrement" class="btn btn-outline-primary">добавить фото</button>
                 <button type="submit" name="submitAction" value="Submit">Опубликовать</button>
-                <button type="submit" name="previewAction" value="Preview">Предпросмотр</button>
+                <button type="submit" name="previewAction" value="Preview">Предпросмотр(не работает еще)</button>
             </form>
             
                 @if($errors->any())

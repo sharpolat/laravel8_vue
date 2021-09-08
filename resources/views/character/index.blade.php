@@ -6,7 +6,7 @@
 
   <div class="my-3 p-3 bg-white rounded box-shadow">
 
-    <h6 class="border-bottom border-gray pb-2 mb-0">Результат поиска</h6>
+    <h6 class="border-bottom border-gray pb-2 mb-0">Результаты поиска</h6>
 
     <div class="media text-muted pt-3">
 
@@ -18,7 +18,7 @@
     </div>
     @foreach($searchCharacters as $character)
     <div class="media text-muted pt-3">
-      <img width="800px" class="img-fluid" src="/image/{{ $character->photo }}">
+      <img class="mr-2 rounded" style="width: 50px; height: 50px;" src="/image/{{ $character->photo }}">
       <p class="media-body pb-3 mb-0 border-bottom border-gray">
         <strong class="d-block text-gray-dark"><a href="{{ route('character.show', $character->id) }}">{{ $character->name }}</a></strong>
         {!! $character->body !!}

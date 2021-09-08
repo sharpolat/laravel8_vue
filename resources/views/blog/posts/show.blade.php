@@ -14,8 +14,7 @@
                             <h1 class="fw-bolder mb-1">{{ $postId->title }}</h1>
                             <!-- Post meta content-->
                             <div class="text-muted fst-italic mb-2">Posted on {{ $postId->created_at }}</div>
-                            <!-- Post categories-->
-                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{ $postId->tags }}</a>
+                            
                         </header>
                         <!-- Preview image figure-->
                         
@@ -104,9 +103,11 @@
                                                 @method('delete')
                                                 @csrf
                                                 <div>
-                                                    <button type="submit" class="btn btn-primary btn-sm">
+                                                    <a href="">
+                                                    <button type="submit" class="btn btn-outline-primary btn-sm">
                                                         удалить
                                                     </button>
+                                                    </a>
                                                 </div>
                                                 </form>
                                             @endif
@@ -126,7 +127,22 @@
                                                 </div>
                                             </div>
                                             </div>
+                                            @auth
                                             
+                                            @if(Auth::user()->id == $key->user_id)
+                                                <form method="POST" action="{{ route('nestedComment.destroy', $key->id) }}">
+                                                @method('delete')
+                                                @csrf
+                                                <div>
+                                                    
+                                                    <button type="submit" class="btn btn-outline-primary btn-sm">
+                                                    удалить
+                                                    </button>
+                                                    
+                                                </div>
+                                                </form>
+                                            @endif
+                                        @endauth
                                             @endif
                                         @endforeach
                                         

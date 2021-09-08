@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Comment;
-use App\Models\PostContent;
 use App\Services\Blog\BlogService;
 use Illuminate\Auth\AuthServiceProvider;
 use App\Http\Requests\StorePostRequest;
@@ -51,12 +50,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {   
-        
-        // проверка input hidden на подмену
-        // $isUserIdCorrect = ;
-        // dd($request, $isUserIdCorrect);
-        // Submit button previewAction
-        
+        // Submit buttons
         if(isset($request->previewAction)){
             return redirect()
                             ->route('preview')
@@ -72,134 +66,22 @@ class PostController extends Controller
                             ->route('count.imageCountIncrement')
                             ->withInput();
         }
+
         // Для начала создание самого поста для последующего добавление данных(post_contents)
-        // !!!!! нужно прописать чтобы не было hidden input нужно брать инфу здесь !!!!!
-        $this->blogService->postCreate($request,'title', 'tags', 'view_count', 'post_type_id', 'user_id', 'comment_count');
-        $dataForPost = $request->only('title', 'tags', 'view_count', 'post_type_id', 'user_id', 'comment_count');
-        $itemForPost = (new Post())->create($dataForPost);
-        $postId = Post::latest()->first();
+        $this->blogService->postCreate('title', 'tags', 'view_count', 'post_type_id', 'user_id', 'comment_count');
+
         // Добавление данных в Post->PostContent в разные поля бд, не смотря как много данных придет из вне
         $dataForText = $request->only('id','body', 'post_id');
         $dataForPhoto = $request->only('id', 'photo', 'post_id');
-        // Либо создание поста image+text либо по отдельности
-        if(isset($dataForText['body']) && isset($dataForPhoto['photo'])){
-            $arrayMergeForData = $dataForText['body'] + $dataForPhoto['photo'];
-            ksort($arrayMergeForData);
-        }
-        elseif(isset($dataForText['body'])) {
-            $onlyBodyData = $dataForText['body'];
-        }
-        else{
-            $onlyImageData = $dataForPhoto['photo'];
-        }
-        if(isset($onlyBodyData)) {
-            foreach($onlyBodyData as $item) {
-                $dataForText2['body'] = $item;
-                $dataForText2['post_id'] = $postId['id'];
-                $itemForText = (new PostContent())->create($dataForText2);
-            }
-        }
-        if(isset($onlyImageData)) {
-            foreach($onlyImageData as $item) {
-                if(is_readable($item)) {
-                    $images = $request->file('photo');
-                    $destinationPath = 'image/';
-                    foreach($images as $image){
-                        if($item->getClientOriginalName() == $image->getClientOriginalName()){
-                            $postImage = date('YmdHis').gettimeofday()["usec"] . "." . $image->getClientOriginalExtension();
-                            $image->move($destinationPath, $postImage);
-                            $input['photo'] = "$postImage";
-                        }
-                    }
-                    if($input['photo']) {
-                        $input['post_id'] = $postId['id'];
-                        $itemForImage = (new PostContent())->create($input);
-                    }
-                }
-            }
-        }
-        $dataForText2 = $dataForText;
-        if(isset($arrayMergeForData)){
-            foreach($arrayMergeForData as $item) {
-                if(is_readable($item)) {
-                    $images = $request->file('photo');
-                    $destinationPath = 'image/';
-                    foreach($images as $image){
-                        if($item->getClientOriginalName() == $image->getClientOriginalName()){
-                            $postImage = date('YmdHis').gettimeofday()["usec"] . "." . $image->getClientOriginalExtension();
-                            $image->move($destinationPath, $postImage);
-                            $input['photo'] = "$postImage";
-                        }
-                    }
-                    if($input['photo']) {
-                        $input['post_id'] = $postId['id'];
-                        $itemForImage = (new PostContent())->create($input);
-                    }
-                }
-                else{
-                    $dataForText2['body'] = $item;
-                    $dataForText2['post_id'] = $postId['id'];
-                    $itemForText = (new PostContent())->create($dataForText2);
-                }
-            }
-        }
-        // if(isset($request)) {
-        //     $numForText = count($dataForText['body']);
-        //     for($i = 0; $i < $numForText; $i++) {
-        //         //add text
-        //         if($dataForText['body'][$i]) {
-        //             $dataForText2['body'] = $dataForText['body'][$i];
-        //             $dataForText2['post_id'] = $dataForText['post_id'] + 1;
-        //             $itemForPostContent = (new PostContent())->create($dataForText2);
-        //             $dataForText2 = $dataForText;
-        //         }
-        //     }
-        // }
-
-        // if(isset($dataForPhoto['photo'])) {
-        //     if($images = $request->file('photo')) {
-        //         $destinationPath = 'image/';
-        //         foreach($images as $image){
-        //             $postImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-        //             $image->move($destinationPath, $postImage);
-        //             $input['photo'] = "$postImage";
-        //         }
-        //     }
-        //     if($input['photo']) {
-        //         $input['post_id'] = $dataForPhoto['post_id'] + 1;
-        //         $itemForPostContent = (new PostContent())->create($input);
-        //     }
-        // }
-
-        // dd($itemForPostContent, $itemForPost);
-        if(isset($arrayMergeForData)) {
-            if( $itemForImage && $itemForText) {
-                return back()->withSuccess('Пост создан успешно')->withInput();
-            }
-            else {
-                return back()->withErrors(['msg'=>'Ошибка заполнения поста'])
-                             ->withInput();
-            }
-        }
-        if(isset($onlyBodyData)) {
-            if($itemForText) {
-                return back()->withSuccess('Пост создан успешно')->withInput();
-            }
-            else {
-                return back()->withErrors(['msg'=>'Ошибка заполнения поста'])
-                             ->withInput();
-            }
-        }
-        if(isset($onlyImageData)) {
-            if($itemForImage) {
-                return back()->withSuccess('Пост создан успешно')->withInput();
-            }
-            else {
-                return back()->withErrors(['msg'=>'Ошибка заполнения поста'])
-                             ->withInput();
-            }
-        }
+        $item = $this->blogService->postContentCreate($dataForText, $dataForPhoto);
         
+        if($item) {
+            return back()->withSuccess('Пост создан успешно')->withInput();
+        }
+        else {
+            return back()->withErrors(['msg'=>'Ошибка заполнения поста'])
+                         ->withInput();
+        }
     }
 
     /**

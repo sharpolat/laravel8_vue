@@ -24,7 +24,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/post') }}">
-                    Heroes of Newerth
+                    Papstudio
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -39,9 +39,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('character.index') }}">{{ __('Characters') }}</a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link" href="{{ route('post.index') }}">{{ __('Lore') }}</a>
-                        </li>
+                        </li> -->
                         @auth
                         @if(Auth::user()->is_admin == 1)
                         <li class="nav-item">
@@ -105,4 +105,5 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/29.1.0/classic/ckeditor.js"></script>
     @yield('scripts')
 </body>
+
 </html>

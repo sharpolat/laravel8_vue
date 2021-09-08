@@ -89,6 +89,7 @@ class NestedCommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        NestedComment::find($id)->delete();
+        return back();
     }
 }
