@@ -93,7 +93,7 @@ class PostController extends Controller
     public function show($id)
     {
         $postId = Post::with('PostContent')->find($id);
-        $comments = Comment::where("post_id", "=", $id)->with('user')->with('nestedComment')->latest()->get();
+        $comments = Comment::where("post_id", "=", $id)->with('user')->with('nestedComment')->get();
         return view('blog.posts.show', compact('postId', 'comments'));
     }
 

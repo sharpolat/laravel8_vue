@@ -9,7 +9,8 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\CountIncrementController;
 use App\Http\Controllers\ParserAllPageController;
-use App\Http\Controllers\ParserAllPageForKrishaController;
+use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\LorePageController;
 use App\Http\Controllers\NestedCommentController;
 use App\Http\Controllers\PreviewController;
 use Illuminate\Http\Request;
@@ -34,20 +35,18 @@ Route::get('/', function () {
 
 Auth::routes();
 
-//parser 
-// Route::get('/parser', ParserController::class)->name('parser');
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('post', PostController::class);
 Route::resource('tag', TagController::class);
 Route::resource('comment', CommentController::class);
-Route::get('lore', function() {
-    return view('lore.index');
-});
+
 Route::resource('nestedComment', NestedCommentController::class);
 Route::resource('character', CharacterController::class);
 Route::resource('/parser', ParserAllPageController::class);
-Route::resource('/parserForKrisha', ParserAllPageForKrishaController::class);
+Route::resource('/lore', LorePageController::class);
+Route::resource('/profile', UserProfileController::class);
 Route::get('/search', SearchController::class)->name('search');
 Route::get('/preview', [PreviewController::class, 'preview'])->name('preview');
 Route::get('/count/textCountIncrement', [CountIncrementController::class, 'textCountIncrement'])->name('count.textCountIncrement');

@@ -36,6 +36,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('post.index') }}">{{ __('News') }}</a>
                         </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('character.index') }}">{{ __('Characters') }}</a>
                         </li>
@@ -81,12 +82,15 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('profile.show', Auth::user()->id) }}">
+                                        {{ __('Profile') }}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-
+                                    
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
