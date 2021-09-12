@@ -22,18 +22,21 @@
         </div>
      </div>
   </div>
+  @auth
   @if(Auth::user()->is_admin == 1)
-                        <form method="POST" action="{{ route('loreContent.destroy', $content->id) }}">
-                            @method('delete')
-                            @csrf
-                            <div>                    
-                            <button type="submit" class="btn btn-outline-primary btn-sm">
-                                удалить
-                            </button>                 
-                            </div>
-                        </form>
+    <form method="POST" action="{{ route('loreContent.destroy', $content->id) }}">
+        @method('delete')
+        @csrf
+        <div>                    
+            <button type="submit" class="btn btn-outline-primary btn-sm">
+                удалить
+            </button>                 
+        </div>
+    </form>
                     @endif
+                    @endauth
   @endForeach
+  
 </div>
     @auth
         @if(Auth::user()->is_admin == 1)            

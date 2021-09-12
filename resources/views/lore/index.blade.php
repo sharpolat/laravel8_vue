@@ -31,6 +31,7 @@
                             <a href="{{route('profile.show', $lore->user->id)}}">{{$lore->user->name}}</a>
                         </p>
                     </div>
+                    @auth
                     @if(Auth::user()->is_admin == 1)
                         <form method="POST" action="{{ route('lore.destroy', $lore->id) }}">
                             @method('delete')
@@ -42,6 +43,7 @@
                             </div>
                         </form>
                     @endif
+                    @endauth
                     <!-- Divider-->
                     <hr class="my-4" />
                     @endforeach
