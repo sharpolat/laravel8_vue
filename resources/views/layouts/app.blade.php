@@ -36,7 +36,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('post.index') }}">{{ __('News') }}</a>
                         </li>
-                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('lore.index') }}">{{ __('Lore') }}</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('character.index') }}">{{ __('Characters') }}</a>
                         </li>

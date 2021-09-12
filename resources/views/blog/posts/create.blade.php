@@ -107,7 +107,7 @@
                 @endif
                 @if (Session::has('success'))
                     <div class="alert alert-success">
-                        <i class="fas fa-check-circle"></i> {{ Session::get('success') }}
+                        <i class="fas fa-check-circle">{{ Session::get('success') }}</i> 
                     </div>
                 @endif
                 </div>

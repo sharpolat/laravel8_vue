@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Lore;
+use App\Models\LoreContent;
 use Illuminate\Http\Request;
 
-class LorePageController extends Controller
+class LorePageContentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class LorePageController extends Controller
      */
     public function index()
     {
-        $lores = Lore::with('user')->get();
-        return view('lore.index', ['lores' => $lores]);
+        //
     }
 
     /**
@@ -25,7 +24,7 @@ class LorePageController extends Controller
      */
     public function create()
     {
-        return view('lore.loreTitleCreate');
+        //
     }
 
     /**
@@ -36,12 +35,13 @@ class LorePageController extends Controller
      */
     public function store(Request $request)
     {
+        
         $validated = $request->validate([
             'title' => 'required|max:255',
-            'user_id' => 'required',
+            'body' => 'required',
         ]);
         $data = $request->input();
-        $item = (new Lore())->create($data);
+        $item = (new LoreContent())->create($data);
         $item->save();
         if($item) {
             return back()->withSuccess('Lore title создан успешно')->withInput();
@@ -50,7 +50,6 @@ class LorePageController extends Controller
             return back()->withErrors(['msg'=>'Ошибка'])
                          ->withInput();
         }
-
     }
 
     /**
@@ -61,7 +60,8 @@ class LorePageController extends Controller
      */
     public function show($id)
     {
-        //
+        $loreContents = LoreContent::where('lore_id', $id)->get();
+        return view('lore.show', compact('loreContents', 'id'));
     }
 
     /**

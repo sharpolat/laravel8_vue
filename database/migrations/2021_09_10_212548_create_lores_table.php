@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLoreModelsTable extends Migration
+class CreateLoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class CreateLoreModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('lore_models', function (Blueprint $table) {
+        Schema::create('lores', function (Blueprint $table) {
             $table->id();
+            $table->string('title', 250);
             $table->timestamps();
+
+            $table->foreignId('user_id')->constrained();
         });
     }
 
@@ -26,6 +29,6 @@ class CreateLoreModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lore_models');
+        Schema::dropIfExists('lores');
     }
 }
