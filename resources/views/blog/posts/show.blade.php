@@ -42,13 +42,8 @@
                                     
                                     <textarea placeholder="комментарий" class="form-control" type="text" name="body"></textarea>
                                     <input type="hidden" name="post_id" value="{{ $postId->id }}">
-                                    @auth
-                                    <input type="hidden" name="user_display_name" value="{{ Auth::user()->name }}">
-                                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                                    @endauth
                                     @guest
-                                    <input type="hidden" name="user_id" value="1">
-                                    <input type="hidden" name="user_display_name" value="guest">
+                                    <input type="hidden" name="guest" value="guest">
                                     @endguest
 
                                     <button type="submit" class="btn btn-outline-primary btn-sm">отправить</button>
@@ -79,14 +74,10 @@
                                                         <textarea placeholder="комментарий" type="text" name="body"></textarea>
                                                         <input type="hidden" name="post_id" value="{{ $postId->id }}">
                                                         <input type="hidden" name="comment_id" value="{{ $comment->id }}">
-                                                        @auth
-                                                        <input type="hidden" name="user_display_name" value="{{ Auth::user()->name }}">
-                                                        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                                                        @endauth
                                                         @guest
-                                                        <input type="hidden" name="user_id" value="1">
-                                                        <input type="hidden" name="user_display_name" value="guest">
+                                                        <input type="hidden" name="guest" value="guest">
                                                         @endguest
+                                                        
 
                                                         <button type="submit">отправить</button>
 
@@ -98,7 +89,7 @@
                                                 </div>
                                             </div>
                                         @auth
-                                            @if(Auth::user()->id == $comment->user->id)
+                                            @if(Auth::user()->is_admin == 1)
                                                 <form method="POST" action="{{ route('comment.destroy', $comment->id) }}">
                                                 @method('delete')
                                                 @csrf
@@ -129,7 +120,7 @@
                                             </div>
                                             @auth
                                             
-                                            @if(Auth::user()->id == $key->user_id)
+                                            @if(Auth::user()->is_admin == 1)
                                                 <form method="POST" action="{{ route('nestedComment.destroy', $key->id) }}">
                                                 @method('delete')
                                                 @csrf

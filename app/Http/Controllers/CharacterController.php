@@ -169,6 +169,7 @@ class CharacterController extends Controller
      */
     public function destroy($id)
     {
+        
         $characterDelete = Character::find($id)->delete();
         return back();
     }

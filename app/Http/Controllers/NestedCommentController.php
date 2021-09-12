@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\NestedComment;
+use Auth;
 
 class NestedCommentController extends Controller
 {
@@ -35,8 +36,16 @@ class NestedCommentController extends Controller
      */
     public function store(Request $request)
     {
-        
         $data = $request->input();
+        if(isset($data['guest'])){
+            $data['user_display_name'] = 'guest';
+            $data['user_id'] = 1;
+            unset($data['guest']);
+        }
+        else {
+            $data['user_display_name'] = Auth::user()->name;
+            $data['user_id'] = Auth::user()->id;
+        }
         $item = (new NestedComment())->create($data);
         if( $item ) {
             return back();

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 use App\Http\Requests\CommentRequest;
+use Auth;
 
 class CommentController extends Controller
 {
@@ -38,6 +39,16 @@ class CommentController extends Controller
     {
         
         $data = $request->input();
+        if(isset($data['guest'])){
+            $data['user_display_name'] = 'guest';
+            $data['user_id'] = 1;
+            unset($data['guest']);
+        }
+        else {
+            $data['user_display_name'] = Auth::user()->name;
+            $data['user_id'] = Auth::user()->id;
+        }
+
         $item = (new Comment())->create($data);
         if( $item ) {
             return back();
@@ -92,7 +103,8 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        $delete = Comment::find($id)->delete();
-        return back();
+        
+            $delete = Comment::find($id)->delete();
+            return back();
     }
 }
