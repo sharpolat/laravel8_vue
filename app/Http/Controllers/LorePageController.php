@@ -95,6 +95,7 @@ class LorePageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete = Lore::find($id)->delete();
+        return back();
     }
 }

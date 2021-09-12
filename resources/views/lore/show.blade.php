@@ -22,6 +22,17 @@
         </div>
      </div>
   </div>
+  @if(Auth::user()->is_admin == 1)
+                        <form method="POST" action="{{ route('loreContent.destroy', $content->id) }}">
+                            @method('delete')
+                            @csrf
+                            <div>                    
+                            <button type="submit" class="btn btn-outline-primary btn-sm">
+                                удалить
+                            </button>                 
+                            </div>
+                        </form>
+                    @endif
   @endForeach
 </div>
     @auth
@@ -34,7 +45,6 @@
             <input name="lore_id" type="hidden" value='{{ $id }}'>
             <button class="btn btn-outline-primary mt-2" type="submit">Добавить</button>
         </form>
-                    
         @endif
     @endauth
 </div>
