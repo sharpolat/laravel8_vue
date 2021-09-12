@@ -38,7 +38,9 @@
                     <h5 class="mb-0">Recent comments</h5>
                 </div>
                     @foreach($comments as $comment)
-                    <p class="mb-0 text-break">{{$comment->body}} на пост <a href="{{route('post.show', $comment->post_id)}}">({{$comment->post->title}})</a></p><br>
+                    <p class="mb-0 text-break">{{$comment->body}}
+                        <a href="{{route('post.show', $comment->post_id)}}">({{$comment->post->title}})</a>
+                    </p><br>
                     @endforeach
                     {{$comments->links()}}
             </div>
