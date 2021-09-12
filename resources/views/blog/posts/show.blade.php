@@ -59,7 +59,7 @@
                                 @foreach($comments as $comment)
                                 <div class="media">
                                     <div class="media-body">
-                                        <h5 class="mt-0">{{ $comment->user_display_name  }}</h5>
+                                        <h5 class="mt-0"><a href="{{route('profile.show', $comment->user->id)}}">{{ $comment->user_display_name  }}</a></h5>
                                         <p class="mb-0 text-break">{{ $comment->body }}</p>
                                         
                                             <div class="btn-group">
@@ -113,7 +113,7 @@
                                                 <a class="d-flex pr-3" href="#">
                                                 </a>
                                                 <div class="media-body">
-                                                    <h5 class="mt-0">{{ $key->user_display_name }}</h5>
+                                                    <h5 class="mt-0"><a href="{{route('profile.show', $key->user->id)}}">{{ $key->user_display_name }}</a></h5>
                                                     <p class="text-break"> {{ $key->body }} </p>
                                                 </div>
                                             </div>

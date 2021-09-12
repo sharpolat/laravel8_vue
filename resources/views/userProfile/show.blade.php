@@ -11,7 +11,7 @@
                         <a href="{{route('profile.edit', $user->id)}}" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a>
                     </div>
                     <div class="media-body mb-5 text-white">
-                        <h4 class="mt-0 mb-0">{{$user->name}}</h4>
+                        <h4 class="mt-0 mb-0">{{$user->name}} #{{ $user->id }}</h4>
                         <p class="small mb-4">Дата регистрации: {{$user->created_at}}</p>
                     </div>
                 </div>
