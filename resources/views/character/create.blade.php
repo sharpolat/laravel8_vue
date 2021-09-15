@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@if(Auth::user()->is_admin == 1)
 <div class="container-sm mt-5">
     <div class="row">
         <div class="col-lg-8">
@@ -77,6 +78,7 @@
     </div>
 </div>
 </div>
+@endif
 @endsection
 
 @section('scripts')

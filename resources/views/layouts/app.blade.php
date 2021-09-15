@@ -51,6 +51,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('post.create') }}">{{ __('Admin') }}</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('imagePage.index') }}">{{ __('Images') }}</a>
+                        </li>
                         @endif
                         @endauth
                     </ul>

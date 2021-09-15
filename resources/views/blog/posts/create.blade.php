@@ -2,6 +2,7 @@
 
 @section('content')
 @auth
+@if(Auth::user()->is_admin == 1)
     <div class="container-sm mt-5">
         <div class="row">
             <div class="col-lg-8">
@@ -37,7 +38,7 @@
                             id="post_type_id"
                             class="form-control"
                             type="hidden"
-                            value="{{ rand(0, 19) }}">
+                            value="{{ 1 }}">
                 </div>
                 <div>
                     <input name="user_id"
@@ -114,12 +115,13 @@
             <div class="col-lg-4">
                 <a href="{{ route('character.create') }}">
                     <button type="button" class="btn btn-outline-primary">ссылка создания персонажа</button>
-                </a>  
+                </a>
                 <!-- форма добавление + 1 text -->
                 
             </div>
         </div>
     </div>
+    @endif
     @endauth
 
 
