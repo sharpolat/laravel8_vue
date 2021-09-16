@@ -43,7 +43,7 @@
                                     <textarea placeholder="комментарий" class="form-control" type="text" name="body"></textarea>
                                     <input type="hidden" name="post_id" value="{{ $postId->id }}">
                                     @guest
-                                    <input type="hidden" name="guest" value="guest">
+                                        <input type="hidden" name="guest" value="guest">
                                     @endguest
 
                                     <button type="submit" class="btn btn-outline-primary btn-sm">отправить</button>
@@ -150,7 +150,7 @@
                 </div>
                 <!-- Side widgets-->
                 <div class="col-lg-4">
-                    <div class="card mb-4">
+                    <!-- <div class="card mb-4">
                         <div class="card-header">Categories</div>
                         <div class="card-body">
                             <div class="row">
@@ -171,11 +171,11 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Side widget-->
+                    
                     <div class="card mb-4">
                         <div class="card-header">Side Widget</div>
                         <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

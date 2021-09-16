@@ -8,7 +8,16 @@
                 <div class="media align-items-end profile-head">
                     <div class="profile mr-3">
                     <img src="/image/{{ $user->profile_photo_path }}" class="rounded mb-2 img-thumbnail" alt="..." width="130">
-                        <a href="{{route('profile.edit', $user->id)}}" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a>
+                    @auth  
+                        @if(Auth::user()->id == $user->id)
+                            <a href="{{route('profile.edit', $user->id)}}" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a>
+                        @else
+                            <a href="#" class="btn btn-outline-dark btn-sm btn-block" disabled>Edit profile</a>
+                        @endif
+                    @endauth
+                    @guest
+                        <a href="#" class="btn btn-outline-dark btn-sm btn-block" disabled>Edit profile</a>
+                    @endguest
                     </div>
                     <div class="media-body mb-5 text-white">
                         <h4 class="mt-0 mb-0">{{$user->name}} #{{ $user->id }}</h4>
