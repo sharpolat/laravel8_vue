@@ -76,7 +76,6 @@ class UserProfileController extends Controller
     public function update(ProfileRequest $request, $id)
     {
         $items = User::find($id)->first();
-        
             $imageData = $request->only('profile_photo_path');
             foreach($imageData as $item) {
                 if(is_readable($item)) {
@@ -87,8 +86,11 @@ class UserProfileController extends Controller
                     $items->profile_photo_path = "$postImage";  
                 }
             }
-        
-        $items->name = $request->name;
+        $takenName = User::where("name", $request->name)->first();
+        if($request->name == $takenName->name){
+            return back()->withErrors(['msg'=>'Имя уже занято'])
+                         ->withInput();
+        }
         $items->about_me = $request->about_me;
         $items->save();
         if($items) {

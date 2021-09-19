@@ -24,7 +24,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/post') }}">
+                <a class="navbar-brand" href="#">
                     Papstudio
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -43,6 +43,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('character.index') }}">{{ __('Characters') }}</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('projectHelp.create') }}">{{ __('Помощь проекту') }}</a>
+                        </li>
                         <!-- <li class="nav-item">
                             <a class="nav-link" href="{{ route('post.index') }}">{{ __('Lore') }}</a>
                         </li> -->
@@ -53,6 +56,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('imagePage.index') }}">{{ __('Images') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('projectHelp.index') }}">{{ __('Message') }}</a>
                         </li>
                         @endif
                         @endauth

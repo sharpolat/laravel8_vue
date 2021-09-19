@@ -15,6 +15,7 @@ class ParserAllPageController extends Controller
      */
     public function index()
     {
+        
         // Вывод последних из всего сайта
         $rowIncrement = 0;
         $rowIncrementDiff = 0;

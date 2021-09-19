@@ -11,6 +11,7 @@ use App\Http\Controllers\CountIncrementController;
 use App\Http\Controllers\ParserAllPageController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\LorePageController;
+use App\Http\Controllers\JobApplyController;
 use App\Http\Controllers\ImagePageController;
 use App\Http\Controllers\LorePageContentController;
 use App\Http\Controllers\NestedCommentController;
@@ -35,9 +36,12 @@ Route::get('/', function () {
     return redirect('post');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-
+Route::get('/profile', function () {
+    // This route can only be accessed by confirmed users...
+    
+})->middleware('verified');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('post', PostController::class);
@@ -49,6 +53,7 @@ Route::resource('character', CharacterController::class);
 Route::resource('/parser', ParserAllPageController::class);
 Route::resource('/imagePage', ImagePageController::class);
 Route::resource('/lore', LorePageController::class);
+Route::resource('/projectHelp', JobApplyController::class)->middleware('verified');
 Route::resource('/loreContent', LorePageContentController::class);
 Route::resource('/profile', UserProfileController::class);
 Route::get('/search', SearchController::class)->name('search');

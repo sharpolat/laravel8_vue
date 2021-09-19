@@ -24,8 +24,8 @@ class ProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:3',
-            'about_me' => 'required|min:3',
+            'name' => 'min:3|max:15',
+            'about_me' => 'min:3|max:255',
             'profile_photo_path' => 'image|mimes:jpg,jpeg,png,svg,gif|max:2048'
         ];
     }

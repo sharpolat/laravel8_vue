@@ -20,6 +20,12 @@
                     @endguest
                     </div>
                     <div class="media-body mb-5 text-white">
+                    @auth  
+                        @if(Auth::user()->id == $user->id)
+                            <p class="mt-0 mb-0 small">{{$user->email}}</p>
+                        @endif
+                    @endauth
+                    
                         <h4 class="mt-0 mb-0">{{$user->name}} #{{ $user->id }}</h4>
                         <p class="small mb-4">Дата регистрации: {{$user->created_at}}</p>
                     </div>
