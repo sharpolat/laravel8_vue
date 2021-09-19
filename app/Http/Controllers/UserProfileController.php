@@ -87,14 +87,14 @@ class UserProfileController extends Controller
                 }
             }
             
-        $takenName = (User::where("name", $request->name)->first() != null) ? User::where("name", $request->name)->first() : '8as dfh7hfwahuf';
-        
+        $takenName = (User::where("name", $request->name)->first() != null) ? $request->name : '8as dfh7hfwahuf';
         // сравнения имен из бд и с собственным
         if(Auth::user()->name != $request->name){
-            if($request->name == $takenName->name){
-                return back()->withErrors(['msg'=>'Имя уже занято'])
-                             ->withInput();
-            }
+                if($request->name == $takenName){
+                    return back()->withErrors(['msg'=>'Имя уже занято'])
+                                ->withInput();
+                }
+                else $items->name = $request->name;
         }
         
         $items->about_me = $request->about_me;
