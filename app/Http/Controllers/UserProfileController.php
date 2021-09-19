@@ -86,11 +86,17 @@ class UserProfileController extends Controller
                     $items->profile_photo_path = "$postImage";  
                 }
             }
-        $takenName = User::where("name", $request->name)->first();
-        if($request->name == $takenName->name){
-            return back()->withErrors(['msg'=>'Имя уже занято'])
-                         ->withInput();
+            
+        $takenName = (User::where("name", $request->name)->first() != null) ? User::where("name", $request->name)->first() : '8as dfh7hfwahuf';
+        
+        // сравнения имен из бд и с собственным
+        if(Auth::user()->name != $request->name){
+            if($request->name == $takenName->name){
+                return back()->withErrors(['msg'=>'Имя уже занято'])
+                             ->withInput();
+            }
         }
+        
         $items->about_me = $request->about_me;
         $items->save();
         if($items) {
