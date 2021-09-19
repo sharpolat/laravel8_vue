@@ -35,13 +35,13 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('post.index') }}">{{ __('News') }}</a>
+                            <a class="nav-link" href="{{ route('post.index') }}">{{ __('Новости') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('lore.index') }}">{{ __('Lore') }}</a>
+                            <a class="nav-link" href="{{ route('lore.index') }}">{{ __('История') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('character.index') }}">{{ __('Characters') }}</a>
+                            <a class="nav-link" href="{{ route('character.index') }}">{{ __('Персонажи') }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('projectHelp.create') }}">{{ __('Помощь проекту') }}</a>
