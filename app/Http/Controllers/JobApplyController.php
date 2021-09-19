@@ -39,7 +39,7 @@ class JobApplyController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|max:15|min:3',
-            'message' => 'required|max:600|min:3',
+            'message' => 'required|max:1000|min:3',
             'file_path' => 'required|mimes:csv,txt,xlx,xls,pdf,doc,docx|max:2048',
         ]);
         $fileModel = new JobApply();
