@@ -39,7 +39,7 @@ class JobApplyController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|max:15|min:3',
-            'message' => 'required|max:1000|min:3',
+            'message' => 'required|max:255|min:3',
             'file_path' => 'required|mimes:csv,txt,xlx,xls,pdf,doc,docx|max:2048',
         ]);
         $fileModel = new JobApply();
@@ -57,7 +57,7 @@ class JobApplyController extends Controller
         $fileModel->message = $request->message;
         $fileModel->save();
         if($fileModel) {
-            return back()->withSuccess('обновления прошли успешно')->withInput();
+            return back()->withSuccess('Ваша заявка принята')->withInput();
         }
         else {
             return back()->withErrors(['msg'=>'Ошибка'])

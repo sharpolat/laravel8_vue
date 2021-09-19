@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="form-group"> <label for="form_message">Оставьте сообщение *</label> <textarea id="form_message" name="message" class="form-control" placeholder="Write your message here." rows="4" required="required" data-error="Оставьте сообщение."></textarea> </div>
+                                        <div class="form-group"> <label for="form_message">Оставьте сообщение *</label> <textarea id="form_message" name="message" class="form-control" placeholder="Write your message here (max:255)" rows="4" required="required" data-error="Оставьте сообщение."></textarea> </div>
                                     </div>
                                 </div>
                                 <div class="row">
