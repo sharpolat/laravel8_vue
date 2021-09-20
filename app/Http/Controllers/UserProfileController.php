@@ -62,7 +62,7 @@ class UserProfileController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id)->first();
+        $user = User::find($id);
         return view('userProfile.edit', compact('user'));
     }
 
@@ -75,7 +75,8 @@ class UserProfileController extends Controller
      */
     public function update(ProfileRequest $request, $id)
     {
-        $items = User::find($id)->first();
+        
+        $items = User::find($id);
             $imageData = $request->only('profile_photo_path');
             foreach($imageData as $item) {
                 if(is_readable($item)) {
@@ -95,7 +96,7 @@ class UserProfileController extends Controller
                                 ->withInput();
                 }
                 else $items->name = $request->name;
-        }
+        }else {$items->name = Auth::user()->name;}
         
         $items->about_me = $request->about_me;
         $items->save();
