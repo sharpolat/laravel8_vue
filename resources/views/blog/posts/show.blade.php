@@ -72,9 +72,15 @@
 
                                                         <form method="POST" action="{{ route('nestedComment.store') }}">
                                                         @csrf
+                                                        @auth
                                                         <textarea placeholder="комментарий" type="text" name="body"></textarea>
+                                                        @endauth
+                                                        @guest
+                                                            <textarea placeholder="Комментарии могут оставлять лишь зарегистрированные пользователи" class="form-control" type="text" disabled></textarea>
+                                                        @endguest
                                                         <input type="hidden" name="post_id" value="{{ $postId->id }}">
                                                         <input type="hidden" name="comment_id" value="{{ $comment->id }}">
+                                                        
                                                         @guest
                                                         <input type="hidden" name="guest" value="guest">
                                                         @endguest
