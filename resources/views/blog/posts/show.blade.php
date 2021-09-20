@@ -39,12 +39,13 @@
                                 <!-- Comment form-->
                                 <form method="POST" action="{{ route('comment.store') }}" class="pb-3">
                                     @csrf
-                                    
+                                    @auth
                                     <textarea placeholder="комментарий" class="form-control" type="text" name="body"></textarea>
-                                    <input type="hidden" name="post_id" value="{{ $postId->id }}">
+                                    @endauth
                                     @guest
-                                        <input type="hidden" name="guest" value="guest">
+                                    <textarea placeholder="Комментарии могут оставлять лишь зарегистрированные пользователи" class="form-control" type="text" disabled></textarea>
                                     @endguest
+                                    <input type="hidden" name="post_id" value="{{ $postId->id }}">
 
                                     <button type="submit" class="btn btn-outline-primary btn-sm">отправить</button>
 
