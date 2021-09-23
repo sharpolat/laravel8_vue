@@ -41,6 +41,7 @@
     @auth
         @if(Auth::user()->is_admin == 1)            
         <form method="POST" action="{{ route('loreContent.store') }}">
+            
             @csrf
             <h6>Создать( Это видишь только ты )</h6>
             <p> <input placeholder="Заголовок" name="title"></p>

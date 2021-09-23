@@ -8,6 +8,7 @@ use App\Models\Comment;
 use App\Services\Blog\BlogService;
 use Illuminate\Auth\AuthServiceProvider;
 use App\Http\Requests\StorePostRequest;
+use App\Models\PostContent;
 
 class PostController extends Controller
 {
@@ -105,7 +106,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -117,7 +118,16 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $item = PostContent::find($id);
+        $data = $request->input();
+        $result = $item->fill($data)->save();
+            if($result) {
+                return back()->withSuccess('обновления прошли успешно')->withInput();
+            }
+            else {
+                return back()->withErrors(['msg'=>'Ошибка'])
+                             ->withInput();
+            }
     }
 
     /**

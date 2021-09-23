@@ -22,7 +22,22 @@
                         <section class="mb-5">
                         @for($i = 0; $i < count($postId->PostContent); $i++)
                             @if(isset($postId->PostContent[$i]['body']))
+                                <!-- edit for admin -->
+                                @auth
+                                @if(Auth::user()->is_admin == 1)
+                                    <form method="POST" action="{{ route('post.update', $postId->PostContent[$i]->id) }}">
+                                    @method('PATCH')    
+                                    @csrf
+                                        <textarea name="body" placeholder="Введите Текст" class="ck_editor_txt" id="ckeditor">{{ $postId->PostContent[$i]['body'] }}</textarea>
+                                        <button type="submit">изменить</button>
+                                    </form>
+                                @else
                                 {!! $postId->PostContent[$i]['body'] !!}
+                                @endif
+                                @endauth
+                                @guest 
+                                {!! $postId->PostContent[$i]['body'] !!}
+                                @endguest
                             @elseif(isset($postId->PostContent[$i]['photo']))
                                 <div class="p-0 m-0"><img src="/image/{{ $postId->PostContent[$i]['photo'] }}" width="680px" class="img-fluid"> </div> <br>
                             @else
@@ -186,7 +201,15 @@
                 </div>
             </div>
         </div>
-        
-        
-    
+      
+@endsection
+
+
+@section('scripts')
+<script>
+    var allEditors = document.querySelectorAll('.ck_editor_txt');
+        for (var i = 0; i < allEditors.length; ++i) {
+          ClassicEditor.create(allEditors[i]);
+        }
+</script>
 @endsection
