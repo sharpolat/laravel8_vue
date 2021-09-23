@@ -158,7 +158,19 @@ class CharacterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($request->input('is_main_character') != null) {
+            $item = character::find($id);
+        }
+        else{ $item = characterShow::find($id);}
+        $data = $request->input();
+        $result = $item->fill($data)->save();
+            if($result) {
+                return back();
+            }
+            else {
+                return back()->withErrors(['msg'=>'Ошибка'])
+                             ->withInput();
+        }
     }
 
     /**
