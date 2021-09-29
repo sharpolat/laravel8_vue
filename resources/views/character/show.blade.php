@@ -12,8 +12,8 @@
                         <div class="container">
                             <article class="row single-post mt-3 no-gutters">
                                 <div class="col-lg-12">
-                                    <div class="image-wrapper float-right pr-3">
-                                    <img src="/image/{{ $characterData->photo }}" width="200px" height="200" class="rounded image-wrapper">
+                                    <div class="image-wrapper float-right">
+                                    <img src="/image/{{ $characterData->photo }}" width="150px" height="150" class="rounded image-wrapper">
                                     </div>
                                     <div class="single-post-content-wrapper">
                                     @auth

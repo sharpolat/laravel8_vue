@@ -103,9 +103,10 @@
     @foreach($npcCharacters as $character)
     <div class="media text-muted pt-3 d-flex flex-row">
       <img alt="50x50" class="mr-2 rounded" style="width: 50px; height: 50px;" src="/image/{{ $character->photo }}" data-holder-rendered="true">
-      <p class="media-body pb-3 mb-0 border-bottom border-gray">
+      
+      <div><p class="media-body pb-3 mb-0">
         <strong class="d-block text-gray-dark"><a href="{{ route('character.show', $character->id) }}">{{ $character->name }}</a></strong>
-        {!! $character->body !!}
+        {!! $character->body !!}</div>
         @auth 
           @if(Auth::user()->is_admin == 1)
             <form method="POST" action=" {{ route('character.destroy', $character->id) }} ">

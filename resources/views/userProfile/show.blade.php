@@ -6,8 +6,8 @@
         <div class="bg-white shadow rounded overflow-hidden">
             <div class="px-4 pt-0 pb-4 cover">
                 <div class="media align-items-end profile-head">
-                    <div class="profile mr-3">
-                    <img src="/image/{{ $user->profile_photo_path }}" class="rounded mb-2 img-thumbnail" alt="..." width="130">
+                    <div class="profile mr-3" >
+                    <img src="/image/{{ $user->profile_photo_path }}" class="rounded mb-2 img-thumbnail mh-100" alt="..."  style="width: 130px; height: 150px;">
                     @auth  
                         @if(Auth::user()->id == $user->id)
                             <a href="{{route('profile.edit', $user->id)}}" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a>

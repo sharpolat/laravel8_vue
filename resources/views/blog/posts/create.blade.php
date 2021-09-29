@@ -1,4 +1,4 @@
-@extends('layouts.app')
+  @extends('layouts.app')
 
 @section('content')
 @auth
@@ -124,10 +124,6 @@
     @endif
     @endauth
 
-
-    
-        
-    
 @endsection
 
 @section('scripts')

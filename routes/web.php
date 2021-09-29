@@ -35,7 +35,6 @@ use App\Models\Post;
 Route::get('/', function () {
     return redirect('post');
 });
-
 Auth::routes(['verify' => true]);
 
 Route::get('/profile', function () {
